@@ -1,7 +1,9 @@
 package com.example.animefacts.data
 
+import com.example.animefacts.data.remote.dto.AnimeInfoResponse
 import com.example.animefacts.data.remote.dto.AnimeResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface JikanApi {
@@ -21,4 +23,8 @@ interface JikanApi {
         @Query("page") page: Int,
     ): AnimeResponse
 
+    @GET("anime/{id}")
+    suspend fun getAnimeInfo(
+        @Path("id") id: Int,
+    ): AnimeInfoResponse
 }

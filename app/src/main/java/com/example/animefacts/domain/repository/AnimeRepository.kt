@@ -1,10 +1,12 @@
 package com.example.animefacts.domain.repository
 
+import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.Anime
-import retrofit2.http.Query
+import com.example.animefacts.domain.model.AnimeInfo
 
 interface AnimeRepository {
-    suspend fun getAnime(page: Int): List<Anime>
-    suspend fun getTopAnime(page: Int): List<Anime>
-    suspend fun searchAnime(query: String, page: Int): List<Anime>
+    suspend fun getAnime(page: Int): ApiResult<List<Anime>>
+    suspend fun getTopAnime(page: Int): ApiResult<List<Anime>>
+    suspend fun searchAnime(query: String, page: Int): ApiResult<List<Anime>>
+    suspend fun getAnimeInfo(id: Int): ApiResult<AnimeInfo>
 }
