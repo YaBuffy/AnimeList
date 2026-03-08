@@ -39,4 +39,22 @@ class AnimeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getTopAiring(page: Int): ApiResult<List<Anime>> {
+        return safeApiCall {
+            api.getTopAiring(page = page).data.map { it.toDomain() }
+        }
+    }
+
+    override suspend fun getTopMovie(page: Int): ApiResult<List<Anime>> {
+        return safeApiCall {
+            api.getTopMovie(page = page).data.map { it.toDomain() }
+        }
+    }
+
+    override suspend fun getTopUpcoming(page: Int): ApiResult<List<Anime>> {
+        return safeApiCall {
+            api.getTopUpcoming(page = page).data.map { it.toDomain() }
+        }
+    }
+
 }

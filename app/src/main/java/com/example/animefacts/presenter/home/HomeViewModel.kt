@@ -1,4 +1,4 @@
-package com.example.animefacts.presenter
+package com.example.animefacts.presenter.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -14,38 +14,42 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
-class AnimeViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val repository: AnimeRepository
 ): ViewModel() {
 
-    private val _animeList = MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
+    private val _animeList =
+        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
     val animeList: StateFlow<ApiResult<List<Anime>>> = _animeList
 
-    private val _animeInfo = MutableStateFlow<ApiResult<AnimeInfo>>(ApiResult.Success(AnimeInfo(
-        id = 0,
-        title = "",
-        score = 0.0,
-        imageUrl = "",
-        type = AnimeType.UNKNOWN,
-        synopsis = "",
-        trailerUrl = "",
-        episodes = 0,
-        duration = "",
-        status = "",
-        scoredBy = 0,
-        rating = "",
-        members = 0,
-        favorites = 0,
-        genres = emptyList(),
-        studios = emptyList()
-    )))
+    private val _animeInfo = MutableStateFlow<ApiResult<AnimeInfo>>(
+        ApiResult.Success(
+            AnimeInfo(
+                id = 0,
+                title = "",
+                score = 0.0,
+                imageUrl = "",
+                type = AnimeType.UNKNOWN,
+                synopsis = "",
+                trailerUrl = "",
+                episodes = 0,
+                duration = "",
+                status = "",
+                scoredBy = 0,
+                rating = "",
+                members = 0,
+                favorites = 0,
+                genres = emptyList(),
+                studios = emptyList()
+            )
+        )
+    )
     val animeInfo: StateFlow<ApiResult<AnimeInfo>> = _animeInfo
 
     fun loadAnime(){
         viewModelScope.launch {
-            _animeList.value = repository.getTopAnime(1)
+            _animeList.value = repository.getTopAiring(1)
         }
     }
 

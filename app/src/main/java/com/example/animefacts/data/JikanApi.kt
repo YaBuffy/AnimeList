@@ -27,4 +27,23 @@ interface JikanApi {
     suspend fun getAnimeInfo(
         @Path("id") id: Int,
     ): AnimeInfoResponse
+
+    //ongoing
+    @GET("top/anime")
+    suspend fun getTopAiring(
+        @Query("filter") filter: String = "airing",
+        @Query("page") page: Int
+    ): AnimeResponse
+
+    @GET("top/anime")
+    suspend fun getTopMovie(
+        @Query("type") type: String = "movie",
+        @Query("page") page: Int
+    ): AnimeResponse
+
+    @GET("top/anime")
+    suspend fun getTopUpcoming(
+        @Query("filter") filter: String = "upcoming",
+        @Query("page") page: Int
+    ): AnimeResponse
 }

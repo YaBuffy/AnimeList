@@ -9,4 +9,7 @@ interface AnimeRepository {
     suspend fun getTopAnime(page: Int): ApiResult<List<Anime>>
     suspend fun searchAnime(query: String, page: Int): ApiResult<List<Anime>>
     suspend fun getAnimeInfo(id: Int): ApiResult<AnimeInfo>
+    suspend fun getTopAiring(page: Int): ApiResult<List<Anime>>
+    suspend fun getTopMovie(page: Int): ApiResult<List<Anime>>
+    suspend fun getTopUpcoming(page: Int): ApiResult<List<Anime>>
 }

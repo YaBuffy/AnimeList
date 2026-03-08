@@ -1,4 +1,4 @@
-package com.example.animefacts.presenter
+package com.example.animefacts.presenter.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,8 +18,8 @@ import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.Anime
 
 @Composable
-fun AnimeScreen(
-    vm: AnimeViewModel = hiltViewModel()
+fun HomeScreen(
+    vm: HomeViewModel = hiltViewModel()
 ){
     val animeListResult by vm.animeList.collectAsState()
 
@@ -35,7 +35,6 @@ fun AnimeScreen(
                     Text(anime.title)
                     Text(anime.type.toString())
                     Text(anime.score.toString())
-                    Text(anime.imageUrl)
                     AsyncImage(
                         model = anime.imageUrl,
                         contentDescription = null,

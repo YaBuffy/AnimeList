@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.animefacts.presenter.AnimeScreen
+import com.example.animefacts.presenter.main.MainScreen
 import com.example.animefacts.ui.theme.AnimeFactsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AnimeFactsTheme {
-                AnimeScreen()
+                MainScreen()
             }
         }
     }
