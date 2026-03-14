@@ -1,5 +1,6 @@
 package com.example.animefacts.data.remote.repository
 
+import android.util.Log
 import com.example.animefacts.data.JikanApi
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.data.mapper.toDomain
@@ -14,7 +15,7 @@ class AnimeRepositoryImpl @Inject constructor(
 ): AnimeRepository {
     override suspend fun getAnime(page: Int): ApiResult<List<Anime>> {
         return safeApiCall {
-            api.getAnime(page).data.map { it.toDomain() }
+            api.getAnime(page = page).data.map { it.toDomain() }
         }
     }
 
@@ -47,13 +48,21 @@ class AnimeRepositoryImpl @Inject constructor(
 
     override suspend fun getTopMovie(page: Int): ApiResult<List<Anime>> {
         return safeApiCall {
-            api.getTopMovie(page = page).data.map { it.toDomain() }
+            api.getTopMovie(page = page).data.map {
+                Log.d("anime", it.toString())
+                it.toDomain() }
         }
     }
 
     override suspend fun getTopUpcoming(page: Int): ApiResult<List<Anime>> {
         return safeApiCall {
             api.getTopUpcoming(page = page).data.map { it.toDomain() }
+        }
+    }
+
+    override suspend fun getCompleted(page: Int): ApiResult<List<Anime>> {
+        return safeApiCall {
+            api.getCompleted(page = page).data.map{it.toDomain()}
         }
     }
 

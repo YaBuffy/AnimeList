@@ -6,7 +6,7 @@ data class AnimeInfo(
     val title: String,
     val score: Double,
     val imageUrl: String,
-    val type: AnimeType,
+    val type: String,
     val synopsis: String,
     val trailerUrl: String,
     val episodes: Int,

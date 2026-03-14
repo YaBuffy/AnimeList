@@ -1,4 +1,4 @@
-package com.example.animefacts.presenter.bottomBar
+package com.example.animefacts.presenter.main.bottomBar
 
 import androidx.annotation.DrawableRes
 import com.example.animefacts.R

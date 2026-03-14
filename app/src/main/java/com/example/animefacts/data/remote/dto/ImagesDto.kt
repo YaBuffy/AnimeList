@@ -5,5 +5,5 @@ data class ImagesDto(
 )
 
 data class ImagesUrlDto(
-    val image_url: String?
+    val large_image_url: String?
 )

@@ -1,4 +1,4 @@
-package com.example.animefacts.presenter.bottomBar
+package com.example.animefacts.presenter.main.bottomBar
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor

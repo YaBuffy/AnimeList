@@ -12,4 +12,5 @@ interface AnimeRepository {
     suspend fun getTopAiring(page: Int): ApiResult<List<Anime>>
     suspend fun getTopMovie(page: Int): ApiResult<List<Anime>>
     suspend fun getTopUpcoming(page: Int): ApiResult<List<Anime>>
+    suspend fun getCompleted(page: Int): ApiResult<List<Anime>>
 }

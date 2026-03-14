@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="425dp"
+    android:height="600dp"
+    android:viewportWidth="425"
+    android:viewportHeight="600">
+
+    <!-- Серый фон -->
+    <path
+        android:fillColor="#F0F0F0"
+        android:pathData="M0 0h425v600h-425z"/>
+
+    <!-- Иконка изображения (простая) -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M212.5,220 L262.5,280 L162.5,280 L212.5,220 Z"/>
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M170,190 m-20,0 a20,20 0 1,1 40,0 a20,20 0 1,1 -40,0"/>
+
+    <!-- Текст "No image" -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M140,360 L285,360 L285,390 L140,390 L140,360 Z"/>
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M170,410 L255,410 L255,430 L170,430 L170,410 Z"/>
+
+</vector>

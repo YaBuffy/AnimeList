@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface JikanApi {
-    @GET("anime")
+    @GET("anime/")
     suspend fun getAnime(
         @Query("page") page: Int,
     ): AnimeResponse
@@ -16,6 +16,8 @@ interface JikanApi {
     suspend fun searchAnime(
         @Query("q") query: String,
         @Query("page") page: Int,
+        @Query("order_by") order_by: String = "popularity",
+
     ): AnimeResponse
 
     @GET("top/anime")
@@ -44,6 +46,13 @@ interface JikanApi {
     @GET("top/anime")
     suspend fun getTopUpcoming(
         @Query("filter") filter: String = "upcoming",
+        @Query("page") page: Int
+    ): AnimeResponse
+
+    @GET("anime")
+    suspend fun getCompleted(
+        @Query("status") status: String = "complete",
+        @Query("order_by") orderBy: String = "popularity",
         @Query("page") page: Int
     ): AnimeResponse
 }

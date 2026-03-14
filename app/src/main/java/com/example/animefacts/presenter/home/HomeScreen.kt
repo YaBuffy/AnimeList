@@ -1,68 +1,82 @@
 package com.example.animefacts.presenter.home
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx. compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil.compose.AsyncImage
-import com.example.animefacts.data.common.ApiResult
-import com.example.animefacts.domain.model.Anime
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.animefacts.presenter.main.components.FakeSearchBar
 
 @Composable
 fun HomeScreen(
-    vm: HomeViewModel = hiltViewModel()
+    vm: HomeViewModel = hiltViewModel(),
+    onSearch: ()->Unit,
+    paddingValues: PaddingValues
 ){
-    val animeListResult by vm.animeList.collectAsState()
+    val homeNavController = rememberNavController()
+    val tabs = listOf(
+        HomeTab.Ongoing,
+        HomeTab.Completed,
+        HomeTab.Upcoming,
+        HomeTab.Movie
+    )
+    val currentRoute = homeNavController.currentBackStackEntryAsState().value?.destination?.route
+    val selectedTabIndex = tabs.indexOfFirst { it.route == currentRoute }
 
-    LaunchedEffect(Unit) {
-        vm.loadAnime()
-    }
+    Scaffold(
+        modifier = Modifier.padding(paddingValues),
+        topBar = { FakeSearchBar(onSearch = onSearch) }
+    ) {paddingValues ->
+        Column(
+            modifier = Modifier.padding(paddingValues),
+        ) {
 
-    when(animeListResult){
-        is ApiResult.Success ->{
-            val animeList = (animeListResult as ApiResult.Success<List<Anime>>).data
-            LazyColumn() {
-                items(animeList){anime->
-                    Text(anime.title)
-                    Text(anime.type.toString())
-                    Text(anime.score.toString())
-                    AsyncImage(
-                        model = anime.imageUrl,
-                        contentDescription = null,
-                        modifier = Modifier.clickable{
-                            vm.loadAnimeInfo(anime.id)
-                        }
+            ScrollableTabRow(
+                selectedTabIndex = selectedTabIndex,
+                edgePadding = 16.dp,
+                divider = {},
+                contentColor = MaterialTheme.colorScheme.primary,
+                indicator = { tabPositions ->
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[if (selectedTabIndex >= 0) selectedTabIndex else 0])
                     )
+                },
+
+            ) {
+                tabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = {
+                            homeNavController.navigate(tab.route){
+                                popUpTo(homeNavController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                // Предотвращаем множественные копии
+                                launchSingleTop = true
+                                // Восстанавливаем состояние при возврате
+                                restoreState = true
+
+                            }
+                        },
+                        text = {Text(tab.title)},
+                        selectedContentColor = MaterialTheme.colorScheme.primary,
+                        unselectedContentColor = MaterialTheme.colorScheme.onBackground
+                        )
                 }
             }
-        }
-        is ApiResult.NetworkError ->{
-            val message = (animeListResult as ApiResult.NetworkError).message
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(message)
-            }
-        }
-        is ApiResult.ServerError -> {
-            val code = (animeListResult as ApiResult.ServerError).code
-            val message = (animeListResult as ApiResult.ServerError).message
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("$code: $message")
-            }
-        }
-        is ApiResult.UnknownError -> {
-            val message = (animeListResult as ApiResult.UnknownError).message
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(message)
-            }
+            HomeTabNavigation(navController = homeNavController)
+
         }
     }
 }

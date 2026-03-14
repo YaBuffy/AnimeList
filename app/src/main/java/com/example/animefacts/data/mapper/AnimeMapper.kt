@@ -6,19 +6,24 @@ import com.example.animefacts.data.remote.dto.GenresDto
 import com.example.animefacts.data.remote.dto.StudiosDto
 import com.example.animefacts.domain.model.Anime
 import com.example.animefacts.domain.model.AnimeInfo
-import com.example.animefacts.domain.model.AnimeType
 import com.example.animefacts.domain.model.Genre
 import com.example.animefacts.domain.model.Studio
 
 
 fun AnimeDto.toDomain(): Anime {
-    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+//    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+    val displayYear = when{
+        year != null -> year.toString()
+        aired.from != null -> aired.from.take(4)
+        else -> "TBA"
+    }
     return Anime(
         id = mal_id ?: 0,
-        title = mainTitle,
-        score = score ?: 0.0,
-        type = type.toAnimeType(),
-        imageUrl = images?.jpg?.image_url ?: ""
+        title = title_english ?: "",
+        score = score?.toString()?.take(4) ?: "0.00",
+        type = type ?: "",
+        imageUrl = images?.jpg?.large_image_url ?: "",
+        year = displayYear
     )
 }
 
@@ -28,8 +33,8 @@ fun AnimeInfoDto.toDomain(): AnimeInfo{
         id = mal_id ?: 0,
         title = mainTitle,
         score = score ?: 0.0,
-        type = type.toAnimeType(),
-        imageUrl = images?.jpg?.image_url ?: "",
+        type = type ?: "",
+        imageUrl = images?.jpg?.large_image_url ?: "",
         synopsis = synopsis ?: "",
         trailerUrl = trailer?.url ?: "",
         episodes = episodes ?: 0,
@@ -56,16 +61,4 @@ fun StudiosDto.toDomain(): Studio{
         id = mal_id,
         name = name
     )
-}
-
-fun String?.toAnimeType(): AnimeType{
-    return when(this){
-        "TV" -> AnimeType.TV
-        "Movie" -> AnimeType.MOVIE
-        "OVA" -> AnimeType.OVA
-        "ONA" -> AnimeType.ONA
-        "Special" -> AnimeType.SPECIAL
-        "Music" -> AnimeType.MUSIC
-        else -> AnimeType.UNKNOWN
-    }
 }

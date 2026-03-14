@@ -1,9 +1,7 @@
 package com.example.animefacts.presenter.main
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +9,7 @@ import com.example.animefacts.Screen
 import com.example.animefacts.presenter.bookmark.BookmarkScreen
 import com.example.animefacts.presenter.discover.DiscoverScreen
 import com.example.animefacts.presenter.home.HomeScreen
+import com.example.animefacts.presenter.search.SearchScreen
 import com.example.animefacts.presenter.stats.StatsScreen
 
 @Composable
@@ -21,10 +20,14 @@ fun MainNavigation(
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
-        modifier = Modifier.padding(paddingValues)
     ){
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onSearch = {
+                    navController.navigate(Screen.Search.route)
+                },
+                paddingValues = paddingValues
+            )
         }
 
         composable(Screen.Discover.route){
@@ -37,6 +40,15 @@ fun MainNavigation(
 
         composable(Screen.Stats.route){
             StatsScreen()
+        }
+
+        composable(Screen.Search.route){
+            SearchScreen(
+                onBack = {
+                    navController.navigate(Screen.Home.route)
+                },
+                paddingValues = paddingValues
+            )
         }
     }
 }
