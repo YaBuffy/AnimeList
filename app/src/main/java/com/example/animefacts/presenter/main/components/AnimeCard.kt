@@ -67,6 +67,7 @@ fun AnimeCard(
                                 .aspectRatio(0.7f)
                                 .clip(MaterialTheme.shapes.medium),
                             contentScale = ContentScale.Crop,
+                            error = painterResource(R.drawable.no_image_placeholder),
                             placeholder = painterResource(R.drawable.no_image_placeholder)
                         )
 

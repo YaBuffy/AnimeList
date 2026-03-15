@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -41,7 +42,7 @@ fun BottomBar(navController: NavController){
                             MaterialTheme.colorScheme.primary
                         else
                                 LocalContentColor.current,
-                        contentDescription = screen.title
+                        contentDescription = null
                     )
                 },
                 onClick = {
@@ -60,7 +61,7 @@ fun BottomBar(navController: NavController){
                     }
                 },
                 selected = currentRoute == screen.route,
-                label = { Text(screen.title) }
+                label = { Text(stringResource(screen.titleRes)) }
             )
         }
     }

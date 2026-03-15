@@ -1,11 +1,13 @@
 package com.example.animefacts.presenter.home
 
-sealed class HomeTab(
-    val route: String,
-    val title: String
+import androidx.annotation.StringRes
+import com.example.animefacts.R
+
+enum class HomeTab(
+    @StringRes val titleRes: Int  // Храним ID ресурса, а не строку
 ) {
-    object Upcoming: HomeTab("upcoming", "Upcoming")
-    object Ongoing: HomeTab("ongoing", "Ongoing")
-    object Completed: HomeTab("completed", "Completed")
-    object Movie: HomeTab("movie", "Movie")
+    Ongoing(R.string.ongoing),
+    Completed(R.string.completed),
+    Upcoming(R.string.upcoming),
+    Movie(R.string.movie)
 }
