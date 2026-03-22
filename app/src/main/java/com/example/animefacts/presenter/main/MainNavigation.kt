@@ -45,7 +45,7 @@ fun MainNavigation(
         composable(Screen.Search.route){
             SearchScreen(
                 onBack = {
-                    navController.navigate(Screen.Home.route)
+                    navController.popBackStack()
                 },
                 paddingValues = paddingValues
             )

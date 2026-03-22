@@ -27,10 +27,19 @@ class AnimeRepositoryImpl @Inject constructor(
 
     override suspend fun searchAnime(
         query: String,
+        type: String?,
+        status: String?,
+        rating: String?,
         page: Int
     ): ApiResult<List<Anime>> {
         return safeApiCall {
-            api.searchAnime(query, page).data.map { it.toDomain() }
+            api.searchAnime(
+                query = query,
+                type = type,
+                status = status,
+                rating = rating,
+                page = page
+            ).data.map { it.toDomain() }
         }
     }
 

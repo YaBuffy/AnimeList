@@ -7,7 +7,13 @@ import com.example.animefacts.domain.model.AnimeInfo
 interface AnimeRepository {
     suspend fun getAnime(page: Int): ApiResult<List<Anime>>
     suspend fun getTopAnime(page: Int): ApiResult<List<Anime>>
-    suspend fun searchAnime(query: String, page: Int): ApiResult<List<Anime>>
+    suspend fun searchAnime(
+        query: String,
+        type: String? = null,
+        status: String? = null,
+        rating: String? = null,
+        page: Int
+    ): ApiResult<List<Anime>>
     suspend fun getAnimeInfo(id: Int): ApiResult<AnimeInfo>
     suspend fun getTopAiring(page: Int): ApiResult<List<Anime>>
     suspend fun getTopMovie(page: Int): ApiResult<List<Anime>>

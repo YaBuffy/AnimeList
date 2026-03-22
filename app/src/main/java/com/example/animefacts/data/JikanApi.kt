@@ -15,9 +15,11 @@ interface JikanApi {
     @GET("anime")
     suspend fun searchAnime(
         @Query("q") query: String,
+        @Query("type") type: String? = null,
+        @Query("status") status: String? = null,
+        @Query("rating") rating: String? = null,
         @Query("page") page: Int,
         @Query("order_by") order_by: String = "popularity",
-
     ): AnimeResponse
 
     @GET("top/anime")

@@ -27,6 +27,7 @@ fun BottomBar(navController: NavController){
     val currentRoute = navBackStackEntry?.destination?.route
 
 
+
     NavigationBar {
         screens.forEach { screen->
             NavigationBarItem(
@@ -60,7 +61,7 @@ fun BottomBar(navController: NavController){
                         restoreState = true
                     }
                 },
-                selected = currentRoute == screen.route,
+                selected = currentRoute==screen.route,
                 label = { Text(stringResource(screen.titleRes)) }
             )
         }

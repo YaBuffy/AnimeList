@@ -9,4 +9,7 @@
     <string name="completed">Completed</string>
     <string name="upcoming">Upcoming</string>
     <string name="movie">Movie</string>
+    <string name="no_results">No Result</string>
+    <string name="filter">Filter</string>
+    <string name="apply">Apply</string>
 </resources>

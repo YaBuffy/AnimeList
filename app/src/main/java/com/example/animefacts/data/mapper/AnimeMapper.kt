@@ -11,7 +11,7 @@ import com.example.animefacts.domain.model.Studio
 
 
 fun AnimeDto.toDomain(): Anime {
-//    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
     val displayYear = when{
         year != null -> year.toString()
         aired.from != null -> aired.from.take(4)
@@ -19,7 +19,7 @@ fun AnimeDto.toDomain(): Anime {
     }
     return Anime(
         id = mal_id ?: 0,
-        title = title_english ?: "",
+        title = mainTitle,
         score = score?.toString()?.take(4) ?: "0.00",
         type = type ?: "",
         imageUrl = images?.jpg?.large_image_url ?: "",

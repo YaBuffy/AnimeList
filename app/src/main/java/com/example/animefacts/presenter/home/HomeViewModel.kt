@@ -1,6 +1,5 @@
 package com.example.animefacts.presenter.home
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.Anime
-import com.example.animefacts.domain.model.AnimeInfo
+import com.example.animefacts.domain.model.AnimeRating
+import com.example.animefacts.domain.model.AnimeStatus
+import com.example.animefacts.domain.model.AnimeType
 import com.example.animefacts.domain.repository.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: AnimeRepository
 ): ViewModel() {
-
+    //Anime List//
     private val _upcomingAnimeList =
         MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
     val upcomingAnimeList: StateFlow<ApiResult<List<Anime>>> = _upcomingAnimeList
@@ -36,41 +37,6 @@ class HomeViewModel @Inject constructor(
     private val _movieList =
         MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
     val movieList: StateFlow<ApiResult<List<Anime>>> = _movieList
-
-    private val _animeInfo = MutableStateFlow<ApiResult<AnimeInfo>>(
-        ApiResult.Success(
-            AnimeInfo(
-                id = 0,
-                title = "",
-                score = 0.0,
-                imageUrl = "",
-                type = "",
-                synopsis = "",
-                trailerUrl = "",
-                episodes = 0,
-                duration = "",
-                status = "",
-                scoredBy = 0,
-                rating = "",
-                members = 0,
-                favorites = 0,
-                genres = emptyList(),
-                studios = emptyList()
-            )
-        )
-    )
-    val animeInfo: StateFlow<ApiResult<AnimeInfo>> = _animeInfo
-
-    var query by mutableStateOf("")
-        private set
-
-    fun onQueryChange(newQuery: String){
-        query = newQuery
-    }
-
-    fun onClear(){
-        query = ""
-    }
 
     fun loadOngoingAnime(){
         viewModelScope.launch {
@@ -96,16 +62,66 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun loadAnimeInfo(id: Int){
-        viewModelScope.launch {
-            _animeInfo.value = repository.getAnimeInfo(id)
-        }
-        Log.d("loadInfo", _animeInfo.value.toString())
+//    fun loadAnimeInfo(id: Int){
+//        viewModelScope.launch {
+//            _animeInfo.value = repository.getAnimeInfo(id)
+//        }
+//        Log.d("loadInfo", _animeInfo.value.toString())
+//    }
+
+
+
+    //Search Anime//
+    var selectedType by mutableStateOf(AnimeType.ALL)
+        private set
+    var selectedStatus by mutableStateOf(AnimeStatus.ALL)
+        private set
+    var selectedRating by mutableStateOf(AnimeRating.ALL)
+        private set
+
+    fun onTypeSelected(newType: AnimeType){
+        selectedType = newType
     }
+
+    fun onStatusSelected(newStatus: AnimeStatus){
+        selectedStatus = newStatus
+    }
+
+    fun onRatingSelected(newRating: AnimeRating){
+        selectedRating = newRating
+    }
+
+    fun clearFilters() {
+        selectedType = AnimeType.ALL
+        selectedStatus = AnimeStatus.ALL
+        selectedRating = AnimeRating.ALL
+    }
+
+
+    var query by mutableStateOf("")
+        private set
+
+    fun onQueryChange(newQuery: String){
+        query = newQuery
+    }
+
+    fun onClear(){
+        query = ""
+    }
+
+    private val _foundAnime =
+        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
+    val foundAnime: StateFlow<ApiResult<List<Anime>>> = _foundAnime
 
     fun searchAnime(){
         viewModelScope.launch {
-            _upcomingAnimeList.value = repository.searchAnime(query, 1)
+            _foundAnime.value = repository.searchAnime(
+                query = query,
+                type = selectedType.apiValue,
+                status = selectedStatus.apiValue,
+                rating = selectedRating.apiValue,
+                page = 1
+            )
         }
     }
 }

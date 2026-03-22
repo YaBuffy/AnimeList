@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -32,7 +31,6 @@ fun HomeScreen(
     onSearch: ()->Unit,
     paddingValues: PaddingValues
 ){
-
     val pagerState = rememberPagerState(pageCount = { HomeTab.entries.size })
     val coroutineScope = rememberCoroutineScope()
 
@@ -53,10 +51,7 @@ fun HomeScreen(
                     TabRowDefaults.SecondaryIndicator(
                         modifier = Modifier
                             .tabIndicatorOffset(tabPositions[pagerState.currentPage])
-                            .animateContentSize()
-                            .graphicsLayer {
-                                alpha = 1f
-                            },
+                            .animateContentSize(),
                         height = 3.dp,
 
                         color = MaterialTheme.colorScheme.primary
@@ -83,7 +78,9 @@ fun HomeScreen(
             }
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.fillMaxWidth().weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
             ) { page ->
                 when (HomeTab.entries[page]) {
                     HomeTab.Ongoing -> OngoingAnimeScreen()
