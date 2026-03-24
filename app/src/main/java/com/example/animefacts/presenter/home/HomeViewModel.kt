@@ -5,15 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.animefacts.data.common.ApiResult
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.animefacts.domain.model.Anime
+import com.example.animefacts.domain.model.AnimeCategory
 import com.example.animefacts.domain.model.AnimeRating
 import com.example.animefacts.domain.model.AnimeStatus
 import com.example.animefacts.domain.model.AnimeType
 import com.example.animefacts.domain.repository.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,54 +23,19 @@ class HomeViewModel @Inject constructor(
     private val repository: AnimeRepository
 ): ViewModel() {
     //Anime List//
-    private val _upcomingAnimeList =
-        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
-    val upcomingAnimeList: StateFlow<ApiResult<List<Anime>>> = _upcomingAnimeList
 
-    private val _ongoingAnimeList =
-        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
-    val ongoingAnimeList: StateFlow<ApiResult<List<Anime>>> = _ongoingAnimeList
-
-    private val _completedAnimeList =
-        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
-    val completedAnimeList: StateFlow<ApiResult<List<Anime>>> = _completedAnimeList
-
-    private val _movieList =
-        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
-    val movieList: StateFlow<ApiResult<List<Anime>>> = _movieList
-
-    fun loadOngoingAnime(){
-        viewModelScope.launch {
-            _ongoingAnimeList.value = repository.getTopAiring(1)
-        }
-    }
-
-    fun loadUpcomingAnime(){
-        viewModelScope.launch {
-            _upcomingAnimeList.value = repository.getTopUpcoming(1)
-        }
-    }
-
-    fun loadCompletedAnime(){
-        viewModelScope.launch {
-            _completedAnimeList.value = repository.getCompleted(1)
-        }
-    }
-
-    fun loadMovie(){
-        viewModelScope.launch {
-            _movieList.value = repository.getTopMovie(1)
-        }
-    }
-
-//    fun loadAnimeInfo(id: Int){
-//        viewModelScope.launch {
-//            _animeInfo.value = repository.getAnimeInfo(id)
-//        }
-//        Log.d("loadInfo", _animeInfo.value.toString())
-//    }
-
-
+    val ongoingAnime = repository
+        .getAnimeByCategory(AnimeCategory.ONGOING)
+        .cachedIn(viewModelScope)
+    val upcomingAnime = repository
+        .getAnimeByCategory(AnimeCategory.UPCOMING)
+        .cachedIn(viewModelScope)
+    val completedAnime = repository
+        .getAnimeByCategory(AnimeCategory.COMPLETED)
+        .cachedIn(viewModelScope)
+    val movieAnime = repository
+        .getAnimeByCategory(AnimeCategory.MOVIE)
+        .cachedIn(viewModelScope)
 
     //Search Anime//
     var selectedType by mutableStateOf(AnimeType.ALL)
@@ -109,19 +75,17 @@ class HomeViewModel @Inject constructor(
         query = ""
     }
 
-    private val _foundAnime =
-        MutableStateFlow<ApiResult<List<Anime>>>(ApiResult.Success(emptyList()))
-    val foundAnime: StateFlow<ApiResult<List<Anime>>> = _foundAnime
+    var pagingFlow = MutableStateFlow<PagingData<Anime>>(PagingData.empty())
 
     fun searchAnime(){
         viewModelScope.launch {
-            _foundAnime.value = repository.searchAnime(
+            repository.searchAnimePaging(
                 query = query,
                 type = selectedType.apiValue,
                 status = selectedStatus.apiValue,
-                rating = selectedRating.apiValue,
-                page = 1
-            )
+                rating = selectedRating.apiValue
+            ).cachedIn(viewModelScope)
+                .collect { pagingFlow.value = it }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.animefacts.data.mapper
 
+import com.example.animefacts.data.local.entity.AnimeEntity
 import com.example.animefacts.data.remote.dto.AnimeDto
 import com.example.animefacts.data.remote.dto.AnimeInfoDto
 import com.example.animefacts.data.remote.dto.GenresDto
@@ -24,6 +25,35 @@ fun AnimeDto.toDomain(): Anime {
         type = type ?: "",
         imageUrl = images?.jpg?.large_image_url ?: "",
         year = displayYear
+    )
+}
+
+fun AnimeDto.toEntity(): AnimeEntity {
+    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+    val displayYear = when{
+        year != null -> year.toString()
+        aired.from != null -> aired.from.take(4)
+        else -> "TBA"
+    }
+    return AnimeEntity(
+        id = mal_id ?: 0,
+        title = mainTitle,
+        score = score?.toString()?.take(4) ?: "0.00",
+        type = type ?: "",
+        imageUrl = images?.jpg?.large_image_url ?: "",
+        year = displayYear,
+        category = ""
+    )
+}
+
+fun AnimeEntity.toDomain(): Anime{
+    return Anime(
+        id = id,
+        title = title,
+        score = score,
+        type = type,
+        imageUrl = imageUrl,
+        year = year
     )
 }
 

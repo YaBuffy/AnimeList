@@ -33,6 +33,6 @@ enum class AnimeRating(
     PG_13("pg13", "Teens 13+"),
     R17("r17", "17+ (violence & profanity)"),
     R_PLUS("r", "Mild Nudity"),
-    RX("rx", "Hentai")
+//    RX("rx", "Hentai")
 }
 

@@ -19,12 +19,14 @@ interface JikanApi {
         @Query("status") status: String? = null,
         @Query("rating") rating: String? = null,
         @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true,
         @Query("order_by") order_by: String = "popularity",
     ): AnimeResponse
 
     @GET("top/anime")
     suspend fun getTopAnime(
         @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true,
     ): AnimeResponse
 
     @GET("anime/{id}")
@@ -36,25 +38,29 @@ interface JikanApi {
     @GET("top/anime")
     suspend fun getTopAiring(
         @Query("filter") filter: String = "airing",
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true
     ): AnimeResponse
 
     @GET("top/anime")
     suspend fun getTopMovie(
         @Query("type") type: String = "movie",
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true,
     ): AnimeResponse
 
     @GET("top/anime")
     suspend fun getTopUpcoming(
         @Query("filter") filter: String = "upcoming",
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true,
     ): AnimeResponse
 
     @GET("anime")
     suspend fun getCompleted(
         @Query("status") status: String = "complete",
         @Query("order_by") orderBy: String = "popularity",
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true,
     ): AnimeResponse
 }

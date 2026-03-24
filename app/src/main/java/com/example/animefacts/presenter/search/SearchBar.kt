@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,12 +25,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.example.animefacts.R
-import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.Anime
-import com.example.animefacts.presenter.main.components.AnimeVerticalGrid
+import com.example.animefacts.presenter.main.components.AnimePagingGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,7 @@ fun AnimeSearchBar(
     onSearch: ()-> Unit,
     onClear: () -> Unit,
     onBack: () -> Unit,
-    animeList: ApiResult<List<Anime>>,
+    pagingItems: LazyPagingItems<Anime>,
     onFilter: () -> Unit
 ){
     var expanded by remember { mutableStateOf(true) }
@@ -101,27 +102,34 @@ fun AnimeSearchBar(
             containerColor = Color.Transparent
         )
     ){
-        if (animeList is ApiResult.Success && animeList.data.isEmpty()){
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                Text(stringResource(R.string.no_results))
+        when(pagingItems.loadState.refresh){
+            is LoadState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
-        }  else AnimeVerticalGrid(animeList)
+            is LoadState.Error ->{
+                val error = (pagingItems.loadState.refresh as LoadState.Error).error
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(error.message ?: "Error")
+                }
+            }
+            else -> if (pagingItems.itemCount == 0) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(stringResource(R.string.no_results))
+                }
+            } else {
+                AnimePagingGrid(pagingItems)
+            }
+        }
     }
-}
-
-@Preview
-@Composable
-fun SearchBarPrev(){
-    var query by remember { mutableStateOf("") }
-    AnimeSearchBar(
-        query = query,
-        onQueryChange = {
-            query = it
-        },
-        onSearch = {},
-        onClear = {},
-        onBack = {},
-        animeList = ApiResult.Success(emptyList()),
-        onFilter = {}
-    )
 }
