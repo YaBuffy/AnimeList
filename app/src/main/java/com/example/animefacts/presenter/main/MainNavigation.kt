@@ -47,7 +47,6 @@ fun MainNavigation(
                 onBack = {
                     navController.popBackStack()
                 },
-                paddingValues = paddingValues
             )
         }
     }

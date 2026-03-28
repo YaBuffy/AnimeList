@@ -27,6 +27,7 @@ class HomeViewModel @Inject constructor(
     val ongoingAnime = repository
         .getAnimeByCategory(AnimeCategory.ONGOING)
         .cachedIn(viewModelScope)
+
     val upcomingAnime = repository
         .getAnimeByCategory(AnimeCategory.UPCOMING)
         .cachedIn(viewModelScope)

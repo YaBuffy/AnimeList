@@ -1,5 +1,6 @@
 package com.example.animefacts.presenter.home
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -12,5 +13,5 @@ fun OngoingAnimeScreen(
     val pagingItems  = vm.ongoingAnime.collectAsLazyPagingItems()
 
     AnimePagingGrid(pagingItems)
-
+    Log.d("ongoingList", pagingItems.itemCount.toString())
 }

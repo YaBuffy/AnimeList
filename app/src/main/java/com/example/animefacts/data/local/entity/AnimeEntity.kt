@@ -12,5 +12,6 @@ data class AnimeEntity(
     val imageUrl: String,
     val type: String,
     val year: String,
-    val category: String
+    val category: String,
+    val sortOrder: Int
 )

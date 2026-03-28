@@ -89,7 +89,10 @@ class AnimeRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override fun getAnimeByCategory(category: AnimeCategory): Flow<PagingData<Anime>> {
         return Pager(
-            config = PagingConfig(pageSize = 25),
+            config = PagingConfig(
+                initialLoadSize = 25,
+                prefetchDistance = 3,
+                pageSize = 25),
             remoteMediator = AnimeRemoteMediator(
                 api = api,
                 db = db,

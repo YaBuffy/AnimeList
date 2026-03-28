@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.example.animefacts.data.mapper.toDomain
 import com.example.animefacts.domain.model.Anime
 
-class SearchPagingSource(
+class   SearchPagingSource(
     private val api: JikanApi,
     private val query: String,
     private val type: String?,

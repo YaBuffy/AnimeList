@@ -12,7 +12,7 @@ import com.example.animefacts.domain.model.Studio
 
 
 fun AnimeDto.toDomain(): Anime {
-    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+    val mainTitle = titles?.firstOrNull{it.type == "Default"}?.title ?: ""
     val displayYear = when{
         year != null -> year.toString()
         aired.from != null -> aired.from.take(4)
@@ -28,8 +28,8 @@ fun AnimeDto.toDomain(): Anime {
     )
 }
 
-fun AnimeDto.toEntity(): AnimeEntity {
-    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+fun AnimeDto.toEntity(category: String, sortOrder: Int): AnimeEntity {
+    val mainTitle = titles?.firstOrNull{it.type == "Default"}?.title ?: ""
     val displayYear = when{
         year != null -> year.toString()
         aired.from != null -> aired.from.take(4)
@@ -42,7 +42,8 @@ fun AnimeDto.toEntity(): AnimeEntity {
         type = type ?: "",
         imageUrl = images?.jpg?.large_image_url ?: "",
         year = displayYear,
-        category = ""
+        category = category,
+        sortOrder = sortOrder
     )
 }
 
@@ -58,7 +59,7 @@ fun AnimeEntity.toDomain(): Anime{
 }
 
 fun AnimeInfoDto.toDomain(): AnimeInfo{
-    val mainTitle = titles?.first{it.type == "Default"}?.title ?: ""
+    val mainTitle = titles?.firstOrNull{it.type == "Default"}?.title ?: ""
     return AnimeInfo(
         id = mal_id ?: 0,
         title = mainTitle,
