@@ -18,6 +18,7 @@ import com.example.animefacts.presenter.home.HomeViewModel
 fun SearchScreen(
     vm: HomeViewModel = hiltViewModel(),
     onBack: () -> Unit,
+    paddingValues: PaddingValues
 ){
     val pagingItems = vm.pagingFlow.collectAsLazyPagingItems()
     val query = vm.query
@@ -39,6 +40,7 @@ fun SearchScreen(
     }
     AnimeSearchBar(
         query = query,
+        paddingValues = paddingValues,
         onQueryChange = {
             vm.onQueryChange(it)
         },
@@ -51,45 +53,4 @@ fun SearchScreen(
         pagingItems = pagingItems,
         onFilter = { showSheet = true }
     )
-
-//    when(animeListResult){
-//        is ApiResult.Success -> {
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(bottom = paddingValues.calculateBottomPadding())
-//                    .clickable(
-//                        indication = null,
-//                        interactionSource = remember { MutableInteractionSource() }
-//                    ){
-//                        focusManager.clearFocus()
-//                    }
-//            ) {
-//                AnimeSearchBar(
-//                    query = query,
-//                    onQueryChange = {
-//                        vm.onQueryChange(it)
-//                    },
-//                    onBack = {onBack()},
-//                    onClear = {vm.onClear()},
-//                    onSearch = {
-//                        vm.searchAnime()
-//                        focusManager.clearFocus() },
-//                    pagingItems = animeListResult,
-//                    onFilter = {showSheet = true}
-//                )
-//            }
-//
-//        }
-//        is ApiResult.ServerError -> {
-//            Text((animeListResult as ApiResult.ServerError).message)
-//        }
-//        is ApiResult.NetworkError -> {
-//            Text((animeListResult as ApiResult.NetworkError).message)
-//        }
-//        is ApiResult.UnknownError -> {
-//            Text((animeListResult as ApiResult.UnknownError).message)
-//        }
-//
-//    }
 }

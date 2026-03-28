@@ -1,8 +1,9 @@
 package com.example.animefacts.presenter.home
 
-import android.util.Log
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animefacts.presenter.main.components.AnimePagingGrid
 
@@ -11,7 +12,12 @@ fun OngoingAnimeScreen(
     vm: HomeViewModel = hiltViewModel()
 ){
     val pagingItems  = vm.ongoingAnime.collectAsLazyPagingItems()
+    val isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
 
-    AnimePagingGrid(pagingItems)
-    Log.d("ongoingList", pagingItems.itemCount.toString())
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = {pagingItems.refresh()}
+    ) {
+        AnimePagingGrid(pagingItems)
+    }
 }

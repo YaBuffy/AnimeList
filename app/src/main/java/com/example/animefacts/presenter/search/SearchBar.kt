@@ -1,6 +1,7 @@
 package com.example.animefacts.presenter.search
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,7 +42,8 @@ fun AnimeSearchBar(
     onClear: () -> Unit,
     onBack: () -> Unit,
     pagingItems: LazyPagingItems<Anime>,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    paddingValues: PaddingValues
 ){
     var expanded by remember { mutableStateOf(true) }
     val focusRequester = remember { FocusRequester() }
@@ -128,7 +130,9 @@ fun AnimeSearchBar(
                     Text(stringResource(R.string.no_results))
                 }
             } else {
-                AnimePagingGrid(pagingItems)
+                AnimePagingGrid(
+                    modifier = Modifier.padding(paddingValues),
+                    pagingItems = pagingItems)
             }
         }
     }

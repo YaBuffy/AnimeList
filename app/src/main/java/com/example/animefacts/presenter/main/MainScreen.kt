@@ -12,7 +12,7 @@ fun MainScreen(){
     Scaffold(
         bottomBar = { BottomBar(navController) },
     ) {paddingValues ->
-        MainNavigation(
+            MainNavigation(
             navController = navController,
             paddingValues = paddingValues
         )
