@@ -25,14 +25,15 @@ enum class AnimeStatus(
 }
 enum class AnimeRating(
     val apiValue: String?,
-    val displayName: String
+    val displayName: String,
+    val apiName: String
 ) {
-    ALL(null, "All Ratings"),
-    G("g", "All Ages"),
-    PG("pg", "Children"),
-    PG_13("pg13", "Teens 13+"),
-    R17("r17", "17+ (violence & profanity)"),
-    R_PLUS("r", "Mild Nudity"),
-//    RX("rx", "Hentai")
+    ALL(null, "All Ratings", "G - All Ages"),
+    G("g", "All Ages", "G - All Ages"),
+    PG("pg", "Children", "PG - Children"),
+    PG_13("pg13", "Teens 13+", "PG-13 - Teens 13 or older"),
+    R17("r17", "17+ (violence & profanity)", "R - 17+ (violence & profanity)"),
+    R_PLUS("r", "Mild Nudity", "R+ - Mild Nudity"),
+//    RX("rx", "Hentai", "Rx - Hentai")
 }
 

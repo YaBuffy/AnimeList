@@ -3,7 +3,7 @@ package com.example.animefacts.di
 import android.content.Context
 import androidx.room.Room
 import com.example.animefacts.data.local.AnimeDatabase
-import com.example.animefacts.data.local.Dao
+import com.example.animefacts.data.local.dao.Dao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

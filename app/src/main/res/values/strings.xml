@@ -12,8 +12,28 @@
     <string name="no_results">No Result</string>
     <string name="filter">Filter</string>
     <string name="apply">Apply</string>
-    <string name="error_network">Network error</string>
     <string name="action_retry">Retry</string>
-    <string name="error_failed_to_load_more">Failed to load more...</string>
+    <string name="score">Score</string>
+    <string name="users">Users</string>
+    <string name="rank">Rank</string>
+    <string name="members">Members</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="votes">%1$s votes</string>
+    <string name="viewing_status">Viewing Status</string>
+    <string name="watching">Watching</string>
+    <string name="completed_anime">Completed</string>
+    <string name="on_hold">On-Hold</string>
+    <string name="dropped">Dropped</string>
+    <string name="plan_to_watch">Planned</string>
+
+
+    //Error Message
+    <string name="error_failed_to_load_more">Failed to load more…</string>
     <string name="action_tap_to_load">Tap to load</string>
+    <string name="error_network">Network issue. Please check your connection.</string>
+    <string name="error_server">Server returned error %1$d: %2$s</string>
+    <string name="error_unknown">An unexpected error occurred: %1$s</string>
+    <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="recomendation">Recomendation</string>
+
 </resources>

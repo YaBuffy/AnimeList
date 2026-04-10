@@ -6,4 +6,7 @@ sealed class Screen(val route: String) {
     object Bookmark: Screen("bookmarks")
     object Stats: Screen("stats")
     object Search: Screen("search")
+    object AnimeInfo: Screen("animeInfo/{id}"){
+        fun createRoute(id: Int) = "animeInfo/$id"
+    }
 }

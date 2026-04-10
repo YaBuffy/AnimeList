@@ -17,5 +17,4 @@ sealed class ApiResult<out T> {
     data class UnknownError(
         val message: String
     ) : ApiResult<Nothing>()
-
 }
