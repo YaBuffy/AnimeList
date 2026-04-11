@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 
@@ -24,8 +25,7 @@ fun BottomBar(navController: NavController){
         BottomNavItem.Stats
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
+    val currentDestination = navBackStackEntry?.destination
 
 
     NavigationBar {
@@ -34,12 +34,12 @@ fun BottomBar(navController: NavController){
                 icon = {
                     Icon(
                         painter = painterResource(
-                            if (currentRoute == screen.route)
+                            if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
                                 screen.selectedIcon
                             else
                                 screen.unselectedIcon
                         ),
-                        tint = if(currentRoute == screen.route)
+                        tint = if(currentDestination?.hierarchy?.any { it.route == screen.route } == true)
                             MaterialTheme.colorScheme.primary
                         else
                                 LocalContentColor.current,
@@ -54,14 +54,14 @@ fun BottomBar(navController: NavController){
                             saveState = true
                         }
 
-                        // не создаёт копии экранов
                         launchSingleTop = true
 
-                        // восстанавливает состояние
                         restoreState = true
                     }
                 },
-                selected = currentRoute==screen.route,
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == screen.route
+                } == true,
                 label = { Text(stringResource(screen.titleRes)) }
             )
         }
