@@ -33,6 +33,12 @@ class AnimeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRandomAnimeInfo(): ApiResult<AnimeInfo> {
+        return safeApiCall {
+            api.getRandomAnimeInfo().data.toDomain()
+        }
+    }
+
     override suspend fun getAnimeStatistics(id: Int): ApiResult<AnimeStatistics> {
         return safeApiCall {
             api.getAnimeStatistics(id).data.toDomain()

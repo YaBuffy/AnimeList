@@ -26,6 +26,9 @@ interface JikanApi {
         @Path("id") id: Int,
     ): AnimeInfoResponse
 
+    @GET("random/anime")
+    suspend fun getRandomAnimeInfo(): AnimeInfoResponse
+
     @GET("anime/{id}/statistics")
     suspend fun getAnimeStatistics(
         @Path("id") id: Int,

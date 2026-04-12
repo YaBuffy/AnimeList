@@ -5,6 +5,7 @@ import com.example.animefacts.domain.usecase.GetAnimeByCategoryUseCase
 import com.example.animefacts.domain.usecase.GetAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.GetAnimeRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetAnimeStatisticsUseCase
+import com.example.animefacts.domain.usecase.GetRandomAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.SearchAnimePagingUseCase
 import dagger.Module
 import dagger.Provides
@@ -54,6 +55,14 @@ object UseCaseModule {
         repository: AnimeRepository
     ): GetAnimeStatisticsUseCase {
         return GetAnimeStatisticsUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRandomAnimeInfoUseCase(
+        repository: AnimeRepository
+    ): GetRandomAnimeInfoUseCase {
+        return GetRandomAnimeInfoUseCase(repository)
     }
 
 }

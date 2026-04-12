@@ -7,9 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.animefacts"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.animefacts"
@@ -44,6 +42,10 @@ dependencies {
     //retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    //okhttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 
     //lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)

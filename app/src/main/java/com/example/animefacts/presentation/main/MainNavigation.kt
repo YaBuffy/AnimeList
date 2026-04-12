@@ -1,7 +1,9 @@
 package com.example.animefacts.presentation.main
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -35,7 +37,7 @@ fun MainNavigation(
                     onSearch = {
                         navController.navigate(Screen.Search.route)
                     },
-                    paddingValues = paddingValues,
+                    modifier = Modifier.padding(paddingValues),
                     onAnimeClick = {
                         navController.navigate(Screen.AnimeInfo.createRoute(it))
                     }
@@ -53,6 +55,59 @@ fun MainNavigation(
                     }
                 )
             }
+            composable(
+                route = Screen.AnimeInfo.route,
+                arguments = listOf(
+                    navArgument("id"){
+                        type = NavType.IntType
+                    }
+                )
+            ){
+                AnimeInfoScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    paddingValues = paddingValues,
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    }
+                )
+            }
+
+
+        }
+
+
+
+        navigation(
+            route = NavGraph.Discover.route,
+            startDestination = Screen.Discover.route
+        ){
+
+            composable(Screen.Discover.route){
+                DiscoverScreen(
+                    onSearch = {
+                        navController.navigate(Screen.Search.route)
+                    },
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    },
+                    modifier = Modifier.padding(paddingValues)
+                )
+            }
+
+            composable(Screen.Search.route){
+                SearchScreen(
+                    paddingValues = paddingValues,
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    }
+                )
+            }
+
 
             composable(
                 route = Screen.AnimeInfo.route,
@@ -72,17 +127,6 @@ fun MainNavigation(
                     }
                 )
             }
-        }
-
-        navigation(
-            route = NavGraph.Discover.route,
-            startDestination = Screen.Discover.route
-        ){
-
-            composable(Screen.Discover.route){
-                DiscoverScreen()
-            }
-
         }
 
         navigation(

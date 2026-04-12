@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx. compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -29,14 +28,14 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     vm: HomeViewModel = hiltViewModel(),
     onSearch: ()->Unit,
-    paddingValues: PaddingValues,
-    onAnimeClick: (Int)->Unit
+    onAnimeClick: (Int)->Unit,
+    modifier: Modifier
 ){
     val pagerState = rememberPagerState(pageCount = { HomeTab.entries.size })
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
-        modifier = Modifier.padding(paddingValues),
+        modifier = modifier,
         topBar = { FakeSearchBar(onSearch = onSearch) }
     ) {paddingValues ->
         Column(

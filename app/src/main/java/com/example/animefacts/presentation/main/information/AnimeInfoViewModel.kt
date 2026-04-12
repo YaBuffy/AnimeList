@@ -14,7 +14,6 @@ import com.example.animefacts.domain.usecase.GetAnimeRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetAnimeStatisticsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -48,9 +47,7 @@ class AnimeInfoViewModel @Inject constructor(
             _animeInfoUIState.value = InfoUIState.Loading
 
             val infoRes = getAnimeInfoUseCase(animeId)
-            delay(500) //Too many Request fix
             val statsRes = getAnimeStatisticsUseCase(animeId)
-            delay(500)
             val recsRes = getAnimeRecommendationsUseCase(animeId)
 
             if (infoRes is ApiResult.Success &&
