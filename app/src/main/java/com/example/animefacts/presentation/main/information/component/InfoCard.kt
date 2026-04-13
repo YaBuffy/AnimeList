@@ -190,6 +190,7 @@ fun RankColumn(
     members: String,
     modifier: Modifier
 ){
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,

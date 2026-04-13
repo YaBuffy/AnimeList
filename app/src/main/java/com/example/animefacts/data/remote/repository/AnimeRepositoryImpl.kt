@@ -27,6 +27,9 @@ class AnimeRepositoryImpl @Inject constructor(
     private val api: JikanApi
 ): AnimeRepository {
 
+    private var cachedAnime: AnimeInfo? = null
+
+
     override suspend fun getAnimeInfo(id: Int): ApiResult<AnimeInfo> {
         return safeApiCall {
             api.getAnimeInfo(id).data.toDomain()
@@ -37,6 +40,14 @@ class AnimeRepositoryImpl @Inject constructor(
         return safeApiCall {
             api.getRandomAnimeInfo().data.toDomain()
         }
+    }
+
+    override fun setCachedAnime(anime: AnimeInfo) {
+        this.cachedAnime = anime
+    }
+
+    override fun getCachedAnime(id: Int): AnimeInfo? {
+        return if (cachedAnime?.id == id) cachedAnime else null
     }
 
     override suspend fun getAnimeStatistics(id: Int): ApiResult<AnimeStatistics> {

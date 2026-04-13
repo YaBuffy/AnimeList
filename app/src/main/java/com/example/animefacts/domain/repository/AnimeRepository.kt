@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 interface AnimeRepository {
     suspend fun getAnimeInfo(id: Int): ApiResult<AnimeInfo>
     suspend fun getRandomAnimeInfo(): ApiResult<AnimeInfo>
+    fun setCachedAnime(anime: AnimeInfo)
+    fun getCachedAnime(id: Int): AnimeInfo?
     suspend fun getAnimeRecommendations(id: Int): ApiResult<List<Recommendation>>
     fun getAnimeByCategory(category: AnimeCategory): Flow<PagingData<Anime>>
     fun searchAnimePaging(

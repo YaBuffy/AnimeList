@@ -1,6 +1,7 @@
 package com.example.animefacts.presentation.main.information
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.example.animefacts.domain.model.Recommendation
 import com.example.animefacts.domain.usecase.GetAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.GetAnimeRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetAnimeStatisticsUseCase
+import com.example.animefacts.domain.usecase.GetCachedAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ class AnimeInfoViewModel @Inject constructor(
     private val getAnimeInfoUseCase: GetAnimeInfoUseCase,
     private val getAnimeStatisticsUseCase: GetAnimeStatisticsUseCase,
     private val getAnimeRecommendationsUseCase: GetAnimeRecommendationsUseCase,
+    private val getCachedAnimeUseCase: GetCachedAnimeUseCase,
     @ApplicationContext private val context: Context
 ): ViewModel() {
     private val animeId: Int = checkNotNull(savedStateHandle["id"])
@@ -35,14 +38,30 @@ class AnimeInfoViewModel @Inject constructor(
 
 
     init {
-        getAnimeInfo()
+        checkCachedAnime()
     }
 
     fun refreshData(){
-        getAnimeInfo()
+        checkCachedAnime()
     }
 
-    private fun getAnimeInfo(){
+    private fun checkCachedAnime(){
+        val cachedAnime = getCachedAnimeUseCase(animeId)
+        if (cachedAnime != null){
+            _animeInfoUIState.value = InfoUIState.Success(
+                FullAnimeData(
+                    info = cachedAnime,
+                    stats = emptyStats(),
+                    recommendations = emptyList()
+                )
+            )
+            updateMissingDataSilently()
+        } else{
+            loadFromApi()
+        }
+    }
+
+    private fun loadFromApi(){
         viewModelScope.launch {
             _animeInfoUIState.value = InfoUIState.Loading
 
@@ -71,6 +90,22 @@ class AnimeInfoViewModel @Inject constructor(
             }
         }
     }
+
+    private fun updateMissingDataSilently(){
+        viewModelScope.launch {
+            val statsRes = getAnimeStatisticsUseCase(animeId)
+            val recsRes = getAnimeRecommendationsUseCase(animeId)
+            val currentUIState = _animeInfoUIState.value
+            if (currentUIState is InfoUIState.Success){
+                _animeInfoUIState.value = InfoUIState.Success(
+                    currentUIState.data.copy(
+                        stats = if(statsRes is ApiResult.Success) statsRes.data else currentUIState.data.stats,
+                        recommendations = if(recsRes is ApiResult.Success) recsRes.data else currentUIState.data.recommendations
+                    )
+                )
+            }
+        }
+    }
     private fun mapErrorToMessage(result: ApiResult<*>): String {
         return when (result) {
             is ApiResult.NetworkError -> context.getString(R.string.error_network)
@@ -79,6 +114,7 @@ class AnimeInfoViewModel @Inject constructor(
             else -> context.getString(R.string.error_something_went_wrong)
         }
     }
+    private fun emptyStats() = AnimeStatistics(0, 0, 0, 0, 0, emptyList())
 }
 
 sealed class InfoUIState{

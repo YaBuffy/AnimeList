@@ -5,8 +5,10 @@ import com.example.animefacts.domain.usecase.GetAnimeByCategoryUseCase
 import com.example.animefacts.domain.usecase.GetAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.GetAnimeRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetAnimeStatisticsUseCase
+import com.example.animefacts.domain.usecase.GetCachedAnimeUseCase
 import com.example.animefacts.domain.usecase.GetRandomAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.SearchAnimePagingUseCase
+import com.example.animefacts.domain.usecase.SetCachedAnimeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,4 +67,19 @@ object UseCaseModule {
         return GetRandomAnimeInfoUseCase(repository)
     }
 
+    @Singleton
+    @Provides
+    fun provideGetCachedAnimeUseCase(
+        repository: AnimeRepository
+    ): GetCachedAnimeUseCase {
+        return GetCachedAnimeUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSetCachedAnimeUseCase(
+        repository: AnimeRepository
+    ): SetCachedAnimeUseCase {
+        return SetCachedAnimeUseCase(repository)
+    }
 }
