@@ -60,6 +60,9 @@ class AnimeRepositoryImpl @Inject constructor(
         return safeApiCall {api.getAnimeRecommendations(id).data.map { it.toDomain() }}
     }
 
+    override suspend fun getRecommendations(): ApiResult<List<Recommendation>> {
+        return safeApiCall {api.getRecommendations().data.flatMap{ recommendationsDto -> recommendationsDto.entry.map{it.toDomain() }} }
+    }
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getAnimeByCategory(category: AnimeCategory): Flow<PagingData<Anime>> {

@@ -59,31 +59,42 @@ fun StatusChart(
                 .clip(MaterialTheme.shapes.small)
         ){
             if(total>0){
-                WatchStatusSegment(
-                    count = completed,
-                    color = completedColor,
-                    modifier = Modifier.weight(completed.toFloat())
-                )
-                WatchStatusSegment(
-                    count = watching,
-                    color = watchingColor,
-                    modifier = Modifier.weight(watching.toFloat())
-                )
-                WatchStatusSegment(
-                    count = planToWatch,
-                    color = planToWatchColor,
-                    modifier = Modifier.weight(planToWatch.toFloat())
-                )
-                WatchStatusSegment(
-                    count = onHold,
-                    color = onHoldColor,
-                    modifier = Modifier.weight(onHold.toFloat())
-                )
-                WatchStatusSegment(
-                    count = dropped,
-                    color = droppedColor,
-                    modifier = Modifier.weight(dropped.toFloat())
-                )
+                if (completed>0) {
+                    WatchStatusSegment(
+                        count = completed,
+                        color = completedColor,
+                        modifier = Modifier.weight(completed.toFloat())
+                    )
+                }
+                if(watching>0){
+                    WatchStatusSegment(
+                        count = watching,
+                        color = watchingColor,
+                        modifier = Modifier.weight(watching.toFloat())
+                    )
+                }
+                if(planToWatch>0){
+                    WatchStatusSegment(
+                        count = planToWatch,
+                        color = planToWatchColor,
+                        modifier = Modifier.weight(planToWatch.toFloat())
+                    )
+                }
+                if(onHold>0){
+                    WatchStatusSegment(
+                        count = onHold,
+                        color = onHoldColor,
+                        modifier = Modifier.weight(onHold.toFloat())
+                    )
+                }
+                if(dropped>0){
+                    WatchStatusSegment(
+                        count = dropped,
+                        color = droppedColor,
+                        modifier = Modifier.weight(dropped.toFloat())
+                    )
+
+                }
             }
         }
         FlowRow(

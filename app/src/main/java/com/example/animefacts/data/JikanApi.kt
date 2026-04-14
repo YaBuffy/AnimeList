@@ -4,6 +4,7 @@ import com.example.animefacts.data.remote.dto.AnimeInfoResponse
 import com.example.animefacts.data.remote.dto.AnimeResponse
 import com.example.animefacts.data.remote.dto.AnimeStatisticsResponse
 import com.example.animefacts.data.remote.dto.RecommendationResponse
+import com.example.animefacts.data.remote.dto.RecommendationsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -69,4 +70,7 @@ interface JikanApi {
         @Query("page") page: Int,
         @Query("sfw") sfw: Boolean = true,
     ): AnimeResponse
+
+    @GET("recommendations/anime")
+    suspend fun getRecommendations(): RecommendationsResponse
 }

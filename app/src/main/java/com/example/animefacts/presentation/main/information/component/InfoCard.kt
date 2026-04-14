@@ -56,7 +56,7 @@ fun InfoCard(
                 year = animeInfo.year,
                 type = animeInfo.type.uppercase(),
                 status = animeInfo.status.uppercase(),
-                studio = animeInfo.studios.first().name.uppercase()
+                studio = animeInfo.studios.firstOrNull()?.name?.uppercase() ?: "Unknown Studio"
             )
 
             VerticalDivider(

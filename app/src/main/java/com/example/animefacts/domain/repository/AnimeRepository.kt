@@ -15,6 +15,7 @@ interface AnimeRepository {
     fun setCachedAnime(anime: AnimeInfo)
     fun getCachedAnime(id: Int): AnimeInfo?
     suspend fun getAnimeRecommendations(id: Int): ApiResult<List<Recommendation>>
+    suspend fun getRecommendations(): ApiResult<List<Recommendation>>
     fun getAnimeByCategory(category: AnimeCategory): Flow<PagingData<Anime>>
     fun searchAnimePaging(
         query: String,

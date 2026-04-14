@@ -12,7 +12,8 @@ import com.example.animefacts.domain.model.AnimeCategory
 import com.example.animefacts.domain.model.AnimeRating
 import com.example.animefacts.domain.model.AnimeStatus
 import com.example.animefacts.domain.model.AnimeType
-import com.example.animefacts.domain.repository.AnimeRepository
+import com.example.animefacts.domain.usecase.GetAnimeByCategoryUseCase
+import com.example.animefacts.domain.usecase.SearchAnimePagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -20,22 +21,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: AnimeRepository
+    getAnimeByCategoryUseCase: GetAnimeByCategoryUseCase,
+    private val searchAnimePagingUseCase: SearchAnimePagingUseCase
 ): ViewModel() {
     //Anime List//
 
-    val ongoingAnime = repository
-        .getAnimeByCategory(AnimeCategory.ONGOING)
+    val ongoingAnime = getAnimeByCategoryUseCase(AnimeCategory.ONGOING)
         .cachedIn(viewModelScope)
 
-    val upcomingAnime = repository
-        .getAnimeByCategory(AnimeCategory.UPCOMING)
+    val upcomingAnime = getAnimeByCategoryUseCase(AnimeCategory.UPCOMING)
         .cachedIn(viewModelScope)
-    val completedAnime = repository
-        .getAnimeByCategory(AnimeCategory.COMPLETED)
+    val completedAnime = getAnimeByCategoryUseCase(AnimeCategory.COMPLETED)
         .cachedIn(viewModelScope)
-    val movieAnime = repository
-        .getAnimeByCategory(AnimeCategory.MOVIE)
+    val movieAnime = getAnimeByCategoryUseCase(AnimeCategory.MOVIE)
         .cachedIn(viewModelScope)
 
     //Search Anime//
@@ -80,7 +78,7 @@ class HomeViewModel @Inject constructor(
 
     fun searchAnime(){
         viewModelScope.launch {
-            repository.searchAnimePaging(
+            searchAnimePagingUseCase(
                 query = query,
                 type = selectedType.apiValue,
                 status = selectedStatus.apiValue,

@@ -4,6 +4,7 @@ import com.example.animefacts.data.local.entity.AnimeEntity
 import com.example.animefacts.data.remote.dto.AnimeDto
 import com.example.animefacts.data.remote.dto.AnimeInfoDto
 import com.example.animefacts.data.remote.dto.AnimeStatisticsDto
+import com.example.animefacts.data.remote.dto.EntryDto
 import com.example.animefacts.data.remote.dto.GenresDto
 import com.example.animefacts.data.remote.dto.RecommendationDto
 import com.example.animefacts.data.remote.dto.ScoresDto
@@ -65,8 +66,14 @@ fun AnimeEntity.toDomain(): Anime{
 }
 
 fun AnimeInfoDto.toDomain(): AnimeInfo{
-    val mainTitle = titles?.firstOrNull{it.type == "Default"}?.title ?: ""
-    val englishTitle = titles?.firstOrNull{it.type == "English"}?.title ?: ""
+    val mainTitle = titles?.find { it.type == "Default" }?.title
+        ?: titles?.find { it.type == "English" }?.title
+        ?: titles?.firstOrNull()?.title
+        ?: "Unknown Title"
+    val englishTitle = titles?.find { it.type == "English" }?.title
+        ?: titles?.find { it.type == "Default" }?.title
+        ?: titles?.firstOrNull()?.title
+        ?: "Unknown Title"
     val newStatus = when(status){
         "Finished Airing" -> "Finished"
         "Currently Airing" -> "Airing"
@@ -77,12 +84,12 @@ fun AnimeInfoDto.toDomain(): AnimeInfo{
         title = mainTitle,
         englishTitle = englishTitle,
         score = score?.toString() ?: "0.0",
-        type = type ?: "",
+        type = type ?: "N/A",
         imageUrl = images?.jpg?.large_image_url ?: "",
-        synopsis = synopsis ?: "",
+        synopsis = synopsis ?: "No description available.",
         trailerUrl = trailer?.embed_url ?: "",
         episodes = episodes ?: 0,
-        duration = duration ?: "",
+        duration = duration ?: "Unknown duration",
         status = newStatus ?: "",
         scoredBy = scored_by?.toString() ?: "0",
         rating = rating ?: "",
@@ -115,6 +122,16 @@ fun RecommendationDto.toDomain(): Recommendation {
         imageUrl = entry.images.jpg?.large_image_url ?: ""
     )
 }
+
+fun EntryDto.toDomain(): Recommendation {
+    return Recommendation(
+        id = mal_id,
+        title = title,
+        imageUrl = images.jpg?.large_image_url ?: ""
+    )
+}
+
+
 
 fun ScoresDto.toDomain(): Score {
     return Score(
