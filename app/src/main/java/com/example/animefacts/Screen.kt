@@ -11,6 +11,7 @@ sealed class Screen(val route: String) {
 
     //discover_graph
     object Discover: Screen("discover")
+    object Schedule: Screen("schedule")
     object Bookmark: Screen("bookmarks")
     object Stats: Screen("stats")
 }

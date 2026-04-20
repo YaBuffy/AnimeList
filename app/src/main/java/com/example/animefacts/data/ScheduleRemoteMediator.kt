@@ -10,15 +10,13 @@ import com.example.animefacts.data.local.entity.AnimeEntity
 import com.example.animefacts.data.local.entity.RemoteKeys
 import com.example.animefacts.data.mapper.toEntity
 import com.example.animefacts.data.remote.JikanApi
-import com.example.animefacts.domain.model.AnimeCategory
 
 @OptIn(ExperimentalPagingApi::class)
-class AnimeRemoteMediator(
+class ScheduleRemoteMediator(
     private val db: AnimeDatabase,
     private val api: JikanApi,
-    private val category: AnimeCategory
+    private val filter: String
 ): RemoteMediator<Int, AnimeEntity>() {
-
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, AnimeEntity>
@@ -36,32 +34,27 @@ class AnimeRemoteMediator(
         }
 
         return try {
-            val response = when(category) {
-                AnimeCategory.ONGOING -> api.getTopAiring(page = page)
-                AnimeCategory.MOVIE -> api.getTopMovie(page = page)
-                AnimeCategory.UPCOMING -> api.getTopUpcoming(page = page)
-                AnimeCategory.COMPLETED -> api.getCompleted(page = page)
-            }
+            val response = api.getSchedule(filter = filter, page = page)
 
             val endOfPaginationReached = !response.pagination.has_next_page
 
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    db.remoteKeysDao().clearRemoteKeysByCategory(category.value)
-                    db.animeDao().clearCategory(category.value)
+                    db.remoteKeysDao().clearRemoteKeysByCategory(filter)
+                    db.animeDao().clearCategory(filter)
                 }
 
-                val lastItem = db.animeDao().getLastItemByCategory(category.value)
+                val lastItem = db.animeDao().getLastItemByCategory(filter)
                 var currentSortOrder = lastItem?.sortOrder ?: 0
 
                 val animeList = response.data.map {
                     currentSortOrder++
-                    it.toEntity(category = category.value, sortOrder = currentSortOrder)
+                    it.toEntity(category = filter, sortOrder = currentSortOrder)
                 }
 
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                
+
                 val keys = animeList.map {
                     RemoteKeys(animeId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
@@ -80,4 +73,5 @@ class AnimeRemoteMediator(
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { anime -> db.remoteKeysDao().remoteKeysAnimeId(anime.id) }
     }
+
 }

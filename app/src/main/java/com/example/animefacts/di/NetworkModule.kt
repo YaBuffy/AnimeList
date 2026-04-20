@@ -1,7 +1,7 @@
 package com.example.animefacts.di
 
 import android.content.Context
-import com.example.animefacts.data.JikanApi
+import com.example.animefacts.data.remote.JikanApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

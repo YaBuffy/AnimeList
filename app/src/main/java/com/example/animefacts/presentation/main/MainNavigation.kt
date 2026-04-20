@@ -14,9 +14,10 @@ import com.example.animefacts.NavGraph
 import com.example.animefacts.Screen
 import com.example.animefacts.presentation.bookmark.BookmarkScreen
 import com.example.animefacts.presentation.discover.DiscoverScreen
+import com.example.animefacts.presentation.discover.schedule.ScheduleScreen
 import com.example.animefacts.presentation.home.HomeScreen
 import com.example.animefacts.presentation.main.information.AnimeInfoScreen
-import com.example.animefacts.presentation.search.SearchScreen
+import com.example.animefacts.presentation.main.search.SearchScreen
 import com.example.animefacts.presentation.stats.StatsScreen
 
 @Composable
@@ -92,7 +93,21 @@ fun MainNavigation(
                     onAnimeClick = {
                         navController.navigate(Screen.AnimeInfo.createRoute(it))
                     },
+                    onScheduleClick = {
+                        navController.navigate(Screen.Schedule.route)
+                    },
                     modifier = Modifier.padding(paddingValues)
+                )
+            }
+            composable(Screen.Schedule.route){
+                ScheduleScreen(
+                    modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    }
                 )
             }
 

@@ -1,4 +1,4 @@
-package com.example.animefacts.data
+package com.example.animefacts.data.remote
 
 import com.example.animefacts.data.remote.dto.AnimeInfoResponse
 import com.example.animefacts.data.remote.dto.AnimeResponse
@@ -73,4 +73,11 @@ interface JikanApi {
 
     @GET("recommendations/anime")
     suspend fun getRecommendations(): RecommendationsResponse
+
+    @GET("schedules")
+    suspend fun getSchedule(
+        @Query("filter") filter: String = "unknown",
+        @Query("sfw") sfw: Boolean = true,
+        @Query("page") page: Int
+    ): AnimeResponse
 }

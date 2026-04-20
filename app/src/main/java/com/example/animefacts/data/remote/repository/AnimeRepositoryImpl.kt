@@ -6,7 +6,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.animefacts.data.AnimeRemoteMediator
-import com.example.animefacts.data.JikanApi
+import com.example.animefacts.data.ScheduleRemoteMediator
+import com.example.animefacts.data.remote.JikanApi
 import com.example.animefacts.data.SearchPagingSource
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.data.local.AnimeDatabase
@@ -62,6 +63,17 @@ class AnimeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecommendations(): ApiResult<List<Recommendation>> {
         return safeApiCall {api.getRecommendations().data.flatMap{ recommendationsDto -> recommendationsDto.entry.map{it.toDomain() }} }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getSchedule(filter: String): Flow<PagingData<Anime>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = ScheduleRemoteMediator(db,api,filter),
+            pagingSourceFactory = {db.animeDao().pagingSource(filter)}
+        ).flow.map { pagingData ->
+            pagingData.map { it.toDomain() }
+        }
     }
 
     @OptIn(ExperimentalPagingApi::class)

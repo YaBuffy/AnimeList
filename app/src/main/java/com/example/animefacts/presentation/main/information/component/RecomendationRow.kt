@@ -31,7 +31,7 @@ fun RecommendationRow(
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.recomendation),
+            text = stringResource(R.string.recommendation),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )

@@ -1,4 +1,4 @@
-package com.example.animefacts.presentation.search
+package com.example.animefacts.presentation.main.search
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api

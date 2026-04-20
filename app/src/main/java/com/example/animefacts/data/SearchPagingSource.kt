@@ -3,6 +3,7 @@ package com.example.animefacts.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.animefacts.data.mapper.toDomain
+import com.example.animefacts.data.remote.JikanApi
 import com.example.animefacts.domain.model.Anime
 
 class   SearchPagingSource(

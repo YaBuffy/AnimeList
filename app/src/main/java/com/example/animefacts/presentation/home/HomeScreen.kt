@@ -41,39 +41,39 @@ fun HomeScreen(
         Column(
             modifier = Modifier.padding(paddingValues),
         ) {
-
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 edgePadding = 16.dp,
                 divider = {},
                 contentColor = MaterialTheme.colorScheme.primary,
-                indicator = {tabPositions->
+                indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         modifier = Modifier
                             .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                             .animateContentSize(),
                         height = 3.dp,
-
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
             ) {
                 HomeTab.entries.forEachIndexed { index, tab ->
                     Tab(
-                        selected = pagerState.currentPage  == index,
+                        selected = pagerState.currentPage == index,
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(
                                     page = tab.ordinal,
-                                    animationSpec = tween(500,
-                                        easing = FastOutSlowInEasing)
+                                    animationSpec = tween(
+                                        500,
+                                        easing = FastOutSlowInEasing
+                                    )
                                 )
                             }
                         },
-                        text = {Text(stringResource(tab.titleRes))},
+                        text = { Text(stringResource(tab.titleRes)) },
                         selectedContentColor = MaterialTheme.colorScheme.primary,
                         unselectedContentColor = MaterialTheme.colorScheme.onBackground
-                        )
+                    )
                 }
             }
             HorizontalPager(

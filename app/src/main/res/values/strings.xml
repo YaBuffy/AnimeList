@@ -25,6 +25,16 @@
     <string name="on_hold">On-Hold</string>
     <string name="dropped">Dropped</string>
     <string name="plan_to_watch">Planned</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="random">Random</string>
+    <string name="schedule">Schedule</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
 
     //Error Message
@@ -34,6 +44,5 @@
     <string name="error_server">Server returned error %1$d: %2$s</string>
     <string name="error_unknown">An unexpected error occurred: %1$s</string>
     <string name="error_something_went_wrong">Something went wrong</string>
-    <string name="recomendation">Recomendation</string>
 
 </resources>
