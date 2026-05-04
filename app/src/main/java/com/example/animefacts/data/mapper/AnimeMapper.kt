@@ -1,21 +1,25 @@
 package com.example.animefacts.data.mapper
 
 import com.example.animefacts.data.local.entity.AnimeEntity
-import com.example.animefacts.data.remote.dto.AnimeDto
-import com.example.animefacts.data.remote.dto.AnimeInfoDto
-import com.example.animefacts.data.remote.dto.AnimeStatisticsDto
-import com.example.animefacts.data.remote.dto.EntryDto
-import com.example.animefacts.data.remote.dto.GenresDto
-import com.example.animefacts.data.remote.dto.RecommendationDto
-import com.example.animefacts.data.remote.dto.ScoresDto
-import com.example.animefacts.data.remote.dto.StudiosDto
+import com.example.animefacts.data.remote.dto.anime.AnimeDto
+import com.example.animefacts.data.remote.dto.animeInfo.AnimeInfoDto
+import com.example.animefacts.data.remote.dto.animeInfo.AnimeStatisticsDto
+import com.example.animefacts.data.remote.dto.animeInfo.EntryDto
+import com.example.animefacts.data.remote.dto.common.GenresDto
+import com.example.animefacts.data.remote.dto.animeInfo.RecommendationDto
+import com.example.animefacts.data.remote.dto.animeInfo.ScoresDto
+import com.example.animefacts.data.remote.dto.common.StudiosDto
+import com.example.animefacts.data.remote.dto.review.ReviewDto
 import com.example.animefacts.domain.model.Anime
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.model.AnimeStatistics
 import com.example.animefacts.domain.model.Genre
 import com.example.animefacts.domain.model.Recommendation
+import com.example.animefacts.domain.model.Review
 import com.example.animefacts.domain.model.Score
 import com.example.animefacts.domain.model.Studio
+import com.example.animefacts.domain.model.User
+import com.example.animefacts.util.formatDate
 
 
 fun AnimeDto.toDomain(): Anime {
@@ -151,5 +155,22 @@ fun StudiosDto.toDomain(): Studio{
     return Studio(
         id = mal_id,
         name = name
+    )
+}
+
+fun ReviewDto.toDomain(): Review{
+    return Review(
+        user = User(
+            username = user.username,
+            images = user.images.jpg?.image_url ?: ""
+        ),
+        animeId = entry.mal_id,
+        animeTitle = entry.title,
+        malId = mal_id,
+        date = formatDate(date),
+        review = review,
+        score = score.toString(),
+        isSpoiler = is_spoiler,
+        avatarUrl = user.images.jpg?.image_url ?: ""
     )
 }

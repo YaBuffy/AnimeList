@@ -18,6 +18,7 @@ import com.example.animefacts.domain.model.AnimeCategory
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.model.AnimeStatistics
 import com.example.animefacts.domain.model.Recommendation
+import com.example.animefacts.domain.model.Review
 import com.example.animefacts.domain.repository.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -116,5 +117,8 @@ class AnimeRepositoryImpl @Inject constructor(
         ).flow
     }
 
+    override suspend fun getTopReview(): ApiResult<List<Review>> {
+        return safeApiCall { api.getTopReviews().data.map { it.toDomain() } }
+    }
 
 }

@@ -9,6 +9,7 @@ import com.example.animefacts.domain.usecase.GetCachedAnimeUseCase
 import com.example.animefacts.domain.usecase.GetRandomAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.GetRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetSchedulesUseCase
+import com.example.animefacts.domain.usecase.GetTopReviewUseCase
 import com.example.animefacts.domain.usecase.SearchAnimePagingUseCase
 import com.example.animefacts.domain.usecase.SetCachedAnimeUseCase
 import dagger.Module
@@ -99,5 +100,13 @@ object UseCaseModule {
         repository: AnimeRepository
     ): GetSchedulesUseCase {
         return GetSchedulesUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetTopReviewUseCase(
+        repository: AnimeRepository
+    ): GetTopReviewUseCase {
+        return GetTopReviewUseCase(repository)
     }
 }

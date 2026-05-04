@@ -72,6 +72,9 @@ dependencies {
     //media
     implementation(libs.coil.compose)
 
+    // Allows using java.time (LocalDateTime, DateTimeFormatter, etc.) on API < 26
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

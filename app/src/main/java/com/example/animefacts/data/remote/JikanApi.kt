@@ -1,10 +1,11 @@
 package com.example.animefacts.data.remote
 
-import com.example.animefacts.data.remote.dto.AnimeInfoResponse
-import com.example.animefacts.data.remote.dto.AnimeResponse
-import com.example.animefacts.data.remote.dto.AnimeStatisticsResponse
-import com.example.animefacts.data.remote.dto.RecommendationResponse
-import com.example.animefacts.data.remote.dto.RecommendationsResponse
+import com.example.animefacts.data.remote.dto.animeInfo.AnimeInfoResponse
+import com.example.animefacts.data.remote.dto.anime.AnimeResponse
+import com.example.animefacts.data.remote.dto.animeInfo.AnimeStatisticsResponse
+import com.example.animefacts.data.remote.dto.animeInfo.RecommendationResponse
+import com.example.animefacts.data.remote.dto.recommendations.RecommendationsResponse
+import com.example.animefacts.data.remote.dto.review.ReviewResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -80,4 +81,7 @@ interface JikanApi {
         @Query("sfw") sfw: Boolean = true,
         @Query("page") page: Int
     ): AnimeResponse
+
+    @GET("top/reviews")
+    suspend fun getTopReviews(): ReviewResponse
 }

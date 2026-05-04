@@ -1,4 +1,6 @@
-package com.example.animefacts.data.remote.dto
+package com.example.animefacts.data.remote.dto.animeInfo
+
+import com.example.animefacts.data.remote.dto.common.ImagesDto
 
 data class RecommendationDto(
     val entry: EntryDto

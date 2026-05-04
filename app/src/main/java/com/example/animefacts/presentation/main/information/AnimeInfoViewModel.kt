@@ -1,11 +1,9 @@
 package com.example.animefacts.presentation.main.information
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.animefacts.R
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.model.AnimeStatistics
@@ -14,6 +12,7 @@ import com.example.animefacts.domain.usecase.GetAnimeInfoUseCase
 import com.example.animefacts.domain.usecase.GetAnimeRecommendationsUseCase
 import com.example.animefacts.domain.usecase.GetAnimeStatisticsUseCase
 import com.example.animefacts.domain.usecase.GetCachedAnimeUseCase
+import com.example.animefacts.util.mapErrorToMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -86,7 +85,7 @@ class AnimeInfoViewModel @Inject constructor(
                     statsRes !is ApiResult.Success -> statsRes
                     else -> recsRes
                 }
-                _animeInfoUIState.value = InfoUIState.Error(mapErrorToMessage(errorResult))
+                _animeInfoUIState.value = InfoUIState.Error(mapErrorToMessage(errorResult, context))
             }
         }
     }
@@ -104,14 +103,6 @@ class AnimeInfoViewModel @Inject constructor(
                     )
                 )
             }
-        }
-    }
-    private fun mapErrorToMessage(result: ApiResult<*>): String {
-        return when (result) {
-            is ApiResult.NetworkError -> context.getString(R.string.error_network)
-            is ApiResult.ServerError -> context.getString(R.string.error_server, result.code, result.message)
-            is ApiResult.UnknownError -> context.getString(R.string.error_unknown, result.message)
-            else -> context.getString(R.string.error_something_went_wrong)
         }
     }
     private fun emptyStats() = AnimeStatistics(0, 0, 0, 0, 0, emptyList())

@@ -1,4 +1,4 @@
-package com.example.animefacts.data.remote.dto
+package com.example.animefacts.data.remote.dto.common
 
 data class PaginationDto(
     val last_visible_page: Int,

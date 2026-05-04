@@ -1,13 +1,12 @@
 package com.example.animefacts.presentation.main.information.component
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +24,6 @@ fun RecommendationRow(
     onAnimeClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ){
-    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -35,21 +33,20 @@ fun RecommendationRow(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(scrollState)
                 .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            animeRecs.forEach { anime->
-                AnimeCard(
-                    id = anime.id,
-                    title = anime.title,
-                    imageUrl = anime.imageUrl,
-                    onAnimeClick = onAnimeClick,
-                    modifier = Modifier.width(140.dp)
-                )
+            items(animeRecs){ anime->
+                    AnimeCard(
+                        id = anime.id,
+                        title = anime.title,
+                        imageUrl = anime.imageUrl,
+                        onAnimeClick = onAnimeClick,
+                        modifier = Modifier.width(140.dp)
+                    )
             }
         }
     }

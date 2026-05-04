@@ -7,6 +7,7 @@ import com.example.animefacts.domain.model.AnimeCategory
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.model.AnimeStatistics
 import com.example.animefacts.domain.model.Recommendation
+import com.example.animefacts.domain.model.Review
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
@@ -26,4 +27,5 @@ interface AnimeRepository {
     ): Flow<PagingData<Anime>>
 
     suspend fun getAnimeStatistics(id: Int): ApiResult<AnimeStatistics>
+    suspend fun getTopReview(): ApiResult<List<Review>>
 }

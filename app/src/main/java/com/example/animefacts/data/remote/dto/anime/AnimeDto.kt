@@ -1,4 +1,7 @@
-package com.example.animefacts.data.remote.dto
+package com.example.animefacts.data.remote.dto.anime
+
+    import com.example.animefacts.data.remote.dto.common.ImagesDto
+import com.example.animefacts.data.remote.dto.common.TitleDto
 
 data class AnimeDto(
     val mal_id: Int?,

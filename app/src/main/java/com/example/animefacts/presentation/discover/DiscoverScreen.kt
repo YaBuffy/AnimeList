@@ -1,9 +1,6 @@
 package com.example.animefacts.presentation.discover
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,26 +18,18 @@ fun DiscoverScreen(
     modifier: Modifier
 ){
     val recommendationList by vm.uiState.collectAsState()
-    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = modifier,
         topBar = { FakeSearchBar(onSearch = onSearch) }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .verticalScroll(scrollState)
-        ) {
             DiscoverContent(
-                modifier = Modifier,
+                modifier = Modifier.padding(paddingValues),
                 onAnimeClick = onAnimeClick,
-                recommendationList = recommendationList,
+                state = recommendationList,
                 loadRandomAnimeInfo = { vm.loadRandomAnimeInfo { id -> onAnimeClick(id) } },
-                onScheduleClick = onScheduleClick
+                onScheduleClick = onScheduleClick,
+                refresh = { vm.loadAllContent() }
             )
-
-        }
-
     }
 }
