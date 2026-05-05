@@ -12,8 +12,8 @@ import com.example.animefacts.domain.model.AnimeCategory
 import com.example.animefacts.domain.model.AnimeRating
 import com.example.animefacts.domain.model.AnimeStatus
 import com.example.animefacts.domain.model.AnimeType
-import com.example.animefacts.domain.usecase.GetAnimeByCategoryUseCase
-import com.example.animefacts.domain.usecase.SearchAnimePagingUseCase
+import com.example.animefacts.domain.usecase.home.GetAnimeByCategoryUseCase
+import com.example.animefacts.domain.usecase.search.SearchAnimePagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

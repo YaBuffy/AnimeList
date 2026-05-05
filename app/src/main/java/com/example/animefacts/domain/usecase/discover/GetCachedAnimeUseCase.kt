@@ -1,4 +1,4 @@
-package com.example.animefacts.domain.usecase
+package com.example.animefacts.domain.usecase.discover
 
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.repository.AnimeRepository

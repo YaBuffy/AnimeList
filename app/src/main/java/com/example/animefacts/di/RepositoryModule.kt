@@ -1,7 +1,9 @@
 package com.example.animefacts.di
 
 import com.example.animefacts.data.remote.repository.AnimeRepositoryImpl
+import com.example.animefacts.data.remote.repository.BookmarkRepositoryImpl
 import com.example.animefacts.domain.repository.AnimeRepository
+import com.example.animefacts.domain.repository.BookmarkRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +18,10 @@ object RepositoryModule {
     fun provideAnimeRepository(
         impl: AnimeRepositoryImpl
     ): AnimeRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideBookmarkRepository(
+        impl: BookmarkRepositoryImpl
+    ): BookmarkRepository = impl
 }

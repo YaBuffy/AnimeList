@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.animefacts.domain.model.Anime
-import com.example.animefacts.domain.usecase.GetSchedulesUseCase
+import com.example.animefacts.domain.usecase.discover.GetSchedulesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

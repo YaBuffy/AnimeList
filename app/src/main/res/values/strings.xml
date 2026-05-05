@@ -36,6 +36,9 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="reviews">Reviews</string>
+    <string name="see_less">See less</string>
+    <string name="see_more">See more</string>
+    <string name="spoiler_alarm">Spoiler • Tap to reveal</string>
 
 
     //Error Message

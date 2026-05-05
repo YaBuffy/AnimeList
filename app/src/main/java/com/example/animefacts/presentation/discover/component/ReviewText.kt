@@ -18,10 +18,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.animefacts.R
 
 @Composable
 fun ReviewText(
@@ -35,14 +37,15 @@ fun ReviewText(
     ){
         Column(
             modifier = Modifier
-                .clickable{expanded = !expanded}
+                .clickable { expanded = !expanded }
                 .blur(
-                    if(spoiler) 3.dp else 0.dp)
+                    if (spoiler) 3.dp else 0.dp
+                )
                 .animateContentSize(
                     animationSpec = tween(
                         durationMillis = 400,
 
-                    )
+                        )
                 )
         ) {
             Text(
@@ -55,7 +58,7 @@ fun ReviewText(
             )
 
             Text(
-                text = if (expanded) "See less" else "See more",
+                text = if (expanded) stringResource(R.string.see_less) else stringResource(R.string.see_more),
                 color = MaterialTheme.colorScheme.primary,
                 fontSize = 12.sp,
             )
@@ -88,12 +91,13 @@ fun ReviewText(
                     .matchParentSize()
                     .background(
                         color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.9f),
-                        shape = MaterialTheme.shapes.small)
+                        shape = MaterialTheme.shapes.small
+                    )
                     .clickable { spoiler = false },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Spoiler • Tap to reveal",
+                    text = stringResource(R.string.spoiler_alarm),
                     color = MaterialTheme.colorScheme.inverseOnSurface,
                     fontSize = 14.sp
                 )

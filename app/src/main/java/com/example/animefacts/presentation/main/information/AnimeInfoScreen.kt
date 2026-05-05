@@ -38,6 +38,9 @@ fun AnimeInfoScreen(
 
     val refreshState = rememberPullToRefreshState()
 
+    val isFavourite by vm.isFavorite.collectAsState()
+    val status by vm.status.collectAsState()
+
     val isRefreshing = uiState is InfoUIState.Loading
 
     Box(
@@ -53,10 +56,11 @@ fun AnimeInfoScreen(
                         animeStats = state.data.stats,
                         animeRecs = state.data.recommendations,
                         modifier = Modifier,
-                        addToFav = {},
+                        addToFav = {vm.toggleFavorite()},
                         onAnimeClick = onAnimeClick,
-                        isAdded = false,
-                        selectStatus = {}
+                        isAdded = isFavourite,
+                        onStatusSelected = {vm.updateViewingStatus(it)},
+                        selectedStatus = status
                     )
                 }
                 is InfoUIState.Error -> {

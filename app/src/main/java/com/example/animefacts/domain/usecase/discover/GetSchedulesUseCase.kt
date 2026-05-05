@@ -1,4 +1,4 @@
-package com.example.animefacts.domain.usecase
+package com.example.animefacts.domain.usecase.discover
 
 import androidx.paging.PagingData
 import com.example.animefacts.domain.model.Anime

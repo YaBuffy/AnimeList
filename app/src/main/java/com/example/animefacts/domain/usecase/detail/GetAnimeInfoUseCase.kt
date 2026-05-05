@@ -1,4 +1,4 @@
-package com.example.animefacts.domain.usecase
+package com.example.animefacts.domain.usecase.detail
 
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.AnimeInfo

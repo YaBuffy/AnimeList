@@ -19,6 +19,7 @@ import com.example.animefacts.domain.model.AnimeStatistics
 import com.example.animefacts.domain.model.Genre
 import com.example.animefacts.domain.model.Recommendation
 import com.example.animefacts.domain.model.Studio
+import com.example.animefacts.domain.model.ViewingStatus
 import com.example.animefacts.presentation.main.information.component.AnimeImage
 import com.example.animefacts.presentation.main.information.component.AnimeScoreStatistics
 import com.example.animefacts.presentation.main.information.component.FavAndStatus
@@ -36,7 +37,8 @@ fun AnimeInfoContent(
     onAnimeClick: (Int) -> Unit,
     addToFav: () -> Unit,
     isAdded: Boolean,
-    selectStatus: () -> Unit,
+    onStatusSelected: (ViewingStatus) -> Unit,
+    selectedStatus: ViewingStatus,
     modifier: Modifier = Modifier,
 ){
     val scrollState = rememberScrollState()
@@ -59,8 +61,10 @@ fun AnimeInfoContent(
         FavAndStatus(
             favorites = animeInfo.favorites.toString(),
             addToFav = addToFav,
-            selectStatus = selectStatus,
-            isAdded = isAdded
+            onStatusSelected = onStatusSelected,
+            isAdded = isAdded,
+            selectedStatus = selectedStatus,
+            modifier = Modifier.padding(top = 10.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -169,8 +173,9 @@ fun AnimeInfoPreview(){
             Recommendation(id = 1, title = "Naruto", imageUrl = "")
         ),
         addToFav = {},
-        selectStatus = {},
+        onStatusSelected = {},
         isAdded = false,
-        onAnimeClick = {}
+        onAnimeClick = {},
+        selectedStatus = ViewingStatus.NOT_WATCHED
     )
 }

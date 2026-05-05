@@ -1,4 +1,4 @@
-package com.example.animefacts.domain.usecase
+package com.example.animefacts.domain.usecase.search
 
 import androidx.paging.PagingData
 import com.example.animefacts.domain.model.Anime
@@ -13,7 +13,7 @@ class SearchAnimePagingUseCase(
         type: String? = null,
         status: String? = null,
         rating: String? = null,
-    ): Flow<PagingData<Anime>>{
+    ): Flow<PagingData<Anime>> {
         return repository.searchAnimePaging(
             query = query,
             type = type,

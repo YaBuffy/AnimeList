@@ -1,6 +1,7 @@
 package com.example.animefacts.data.mapper
 
 import com.example.animefacts.data.local.entity.AnimeEntity
+import com.example.animefacts.data.local.entity.BookmarkEntity
 import com.example.animefacts.data.remote.dto.anime.AnimeDto
 import com.example.animefacts.data.remote.dto.animeInfo.AnimeInfoDto
 import com.example.animefacts.data.remote.dto.animeInfo.AnimeStatisticsDto
@@ -13,12 +14,14 @@ import com.example.animefacts.data.remote.dto.review.ReviewDto
 import com.example.animefacts.domain.model.Anime
 import com.example.animefacts.domain.model.AnimeInfo
 import com.example.animefacts.domain.model.AnimeStatistics
+import com.example.animefacts.domain.model.Bookmark
 import com.example.animefacts.domain.model.Genre
 import com.example.animefacts.domain.model.Recommendation
 import com.example.animefacts.domain.model.Review
 import com.example.animefacts.domain.model.Score
 import com.example.animefacts.domain.model.Studio
 import com.example.animefacts.domain.model.User
+import com.example.animefacts.domain.model.ViewingStatus
 import com.example.animefacts.util.formatDate
 
 
@@ -172,5 +175,38 @@ fun ReviewDto.toDomain(): Review{
         score = score.toString(),
         isSpoiler = is_spoiler,
         avatarUrl = user.images.jpg?.image_url ?: ""
+    )
+}
+
+fun BookmarkEntity.toDomain(): Bookmark{
+    return Bookmark(
+        id = id,
+        title = title,
+        imageUrl = imageUrl,
+        status = status.let{ ViewingStatus.valueOf(it)},
+        isFavorite = isFavorite,
+        addedTime = addedTime
+    )
+}
+
+fun Bookmark.toEntity(): BookmarkEntity{
+   return BookmarkEntity(
+        id =id,
+        title = title,
+        imageUrl = imageUrl,
+        status = status.name,
+        isFavorite = isFavorite,
+        addedTime = addedTime
+    )
+}
+
+fun AnimeInfo.toBookmark(status: ViewingStatus, isFavorite: Boolean = false): Bookmark{
+    return Bookmark(
+        id = id,
+        title = title,
+        imageUrl = imageUrl,
+        status = status,
+        isFavorite = isFavorite,
+        addedTime = System.currentTimeMillis()
     )
 }

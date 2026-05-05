@@ -3,6 +3,7 @@ package com.example.animefacts.di
 import android.content.Context
 import androidx.room.Room
 import com.example.animefacts.data.local.AnimeDatabase
+import com.example.animefacts.data.local.dao.BookmarkDao
 import com.example.animefacts.data.local.dao.Dao
 import dagger.Module
 import dagger.Provides
@@ -22,7 +23,9 @@ object DatabaseModule {
             context = context,
             klass = AnimeDatabase::class.java,
             name = "anime_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
@@ -31,5 +34,10 @@ object DatabaseModule {
         return db.animeDao()
     }
 
+    @Provides
+    @Singleton
+    fun provideBookmarkDao(db: AnimeDatabase): BookmarkDao {
+        return db.bookmarkDao()
+    }
 
 }

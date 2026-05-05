@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.animefacts.data.common.ApiResult
 import com.example.animefacts.domain.model.Recommendation
 import com.example.animefacts.domain.model.Review
-import com.example.animefacts.domain.usecase.GetRandomAnimeInfoUseCase
-import com.example.animefacts.domain.usecase.GetRecommendationsUseCase
-import com.example.animefacts.domain.usecase.GetTopReviewUseCase
-import com.example.animefacts.domain.usecase.SetCachedAnimeUseCase
+import com.example.animefacts.domain.usecase.discover.GetRandomAnimeInfoUseCase
+import com.example.animefacts.domain.usecase.discover.GetRecommendationsUseCase
+import com.example.animefacts.domain.usecase.discover.GetTopReviewUseCase
+import com.example.animefacts.domain.usecase.discover.SetCachedAnimeUseCase
 import com.example.animefacts.util.mapErrorToMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
