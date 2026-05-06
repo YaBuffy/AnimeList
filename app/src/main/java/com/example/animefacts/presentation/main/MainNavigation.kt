@@ -150,7 +150,12 @@ fun MainNavigation(
         ){
 
             composable(Screen.Bookmark.route){
-                BookmarkScreen()
+                BookmarkScreen(
+                    modifier = Modifier.padding(paddingValues),
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    }
+                )
             }
 
         }

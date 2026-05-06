@@ -39,6 +39,8 @@
     <string name="see_less">See less</string>
     <string name="see_more">See more</string>
     <string name="spoiler_alarm">Spoiler • Tap to reveal</string>
+    <string name="favorites">Favorites</string>
+
 
 
     //Error Message
@@ -48,5 +50,6 @@
     <string name="error_server">Server returned error %1$d: %2$s</string>
     <string name="error_unknown">An unexpected error occurred: %1$s</string>
     <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="not_watched">Not Watched</string>
 
 </resources>

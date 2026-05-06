@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.animefacts.R
@@ -131,7 +132,7 @@ fun StatusDropdown(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = selectedStatus.status ,
+                    text = stringResource(selectedStatus.titleRes) ,
                     maxLines = 1,
                     fontWeight = if(selectedStatus!= ViewingStatus.NOT_WATCHED) FontWeight.Bold
                     else FontWeight.Normal,
@@ -153,7 +154,7 @@ fun StatusDropdown(
         ) {
             ViewingStatus.entries.forEach { status ->
                 DropdownMenuItem(
-                    text = { Text(status.status) },
+                    text = { Text(stringResource(status.titleRes)) },
                     onClick = {
                         onSelected(status)
                         expanded = false

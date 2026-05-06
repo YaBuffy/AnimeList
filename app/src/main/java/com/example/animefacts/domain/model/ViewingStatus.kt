@@ -1,11 +1,14 @@
 package com.example.animefacts.domain.model
 
-enum class ViewingStatus(val status: String) {
-    NOT_WATCHED("Not Watched"),
-    WATCHING("Watching"),
-    COMPLETED("Completed"),
-    ON_HOLD("On-Hold"),
-    DROPPED("Dropped"),
-    PLAN_TO_WATCH("Planned");
+import androidx.annotation.StringRes
+import com.example.animefacts.R
+
+enum class ViewingStatus(@StringRes val titleRes: Int) {
+    NOT_WATCHED(R.string.not_watched),
+    WATCHING(R.string.watching),
+    COMPLETED(R.string.completed),
+    ON_HOLD(R.string.on_hold),
+    DROPPED(R.string.dropped),
+    PLAN_TO_WATCH(R.string.plan_to_watch);
 
 }
