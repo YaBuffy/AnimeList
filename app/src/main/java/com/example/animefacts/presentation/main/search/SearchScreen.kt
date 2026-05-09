@@ -1,9 +1,14 @@
 package com.example.animefacts.presentation.main.search
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +31,10 @@ fun SearchScreen(
     val focusManager = LocalFocusManager.current
 
     var showSheet by remember { mutableStateOf(false) }
+
+    val visible = remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {visible.value = true}
+
     if (showSheet){
         ModalBottomSheet(
             onDismissRequest = {showSheet = false}
@@ -39,20 +48,27 @@ fun SearchScreen(
         }
 
     }
-    AnimeSearchBar(
-        query = query,
-        paddingValues = paddingValues,
-        onQueryChange = {
-            vm.onQueryChange(it)
-        },
-        onBack = { onBack() },
-        onClear = { vm.onClear() },
-        onSearch = {
-            vm.searchAnime()
-            focusManager.clearFocus()
-        },
-        pagingItems = pagingItems,
-        onFilter = { showSheet = true },
-        onAnimeClick = onAnimeClick
-    )
+    AnimatedVisibility(
+        visible = visible.value,
+        enter = fadeIn(animationSpec = tween(600)) +
+                slideInVertically(initialOffsetY = { it/5 }, animationSpec = tween(1000)),
+    ){
+        AnimeSearchBar(
+            query = query,
+            paddingValues = paddingValues,
+            onQueryChange = {
+                vm.onQueryChange(it)
+            },
+            onBack = { onBack() },
+            onClear = { vm.onClear() },
+            onSearch = {
+                vm.searchAnime()
+                focusManager.clearFocus()
+            },
+            pagingItems = pagingItems,
+            onFilter = { showSheet = true },
+            onAnimeClick = onAnimeClick
+        )
+
+    }
 }

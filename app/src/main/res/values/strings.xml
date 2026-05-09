@@ -51,5 +51,12 @@
     <string name="error_unknown">An unexpected error occurred: %1$s</string>
     <string name="error_something_went_wrong">Something went wrong</string>
     <string name="not_watched">Not Watched</string>
+    <string name="your_statistics">Your Statistics</string>
+    <string name="time_spent_watching_days_hours_minutes">Time spent watching: ~%1$d days %2$d hours %3$d minutes</string>
+    <string name="time_spent_watching_hours_minutes">Time spent watching: ~%1$d hours %2$d minutes</string>
+    <string name="time_spent_watching_minutes">Time spent watching: ~%1$d minutes</string>
+    <string name="time_spent_watching_0_minutes">Time spent watching: 0 minutes</string>
+    <string name="weekly_activity">Weekly Activity</string>
+    <string name="recently_watched">Recently watched</string>
 
 </resources>

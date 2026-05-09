@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.animefacts.data.local.entity.BookmarkEntity
+import com.example.animefacts.data.local.entity.DayCountEntity
 import com.example.animefacts.domain.model.ViewingStatus
 import kotlinx.coroutines.flow.Flow
 
@@ -25,4 +26,19 @@ interface BookmarkDao {
 
     @Query("Delete from Bookmark where id = :id")
     suspend fun deleteBookmarkById(id: Int)
+
+    @Query("""
+        select
+        strftime('%Y-%m-%d', datetime(addedTime / 1000, 'unixepoch')) as date,
+        count(*) as count
+        from bookmark
+        where addedTime >= :startTime
+        group by date
+        order by date ASC
+    """
+    )
+    fun getWeeklyActivity(startTime: Long): Flow<List<DayCountEntity>>
+
+    @Query("Select * from Bookmark order by addedTime desc limit :count")
+    fun getRecentlyWatched(count: Int): Flow<List<BookmarkEntity>>
 }

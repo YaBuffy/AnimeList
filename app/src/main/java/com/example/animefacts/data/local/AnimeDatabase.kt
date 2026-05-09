@@ -11,7 +11,7 @@ import com.example.animefacts.data.local.entity.RemoteKeys
 
 @Database(
     entities = [AnimeEntity::class, RemoteKeys::class, BookmarkEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class AnimeDatabase : RoomDatabase() {

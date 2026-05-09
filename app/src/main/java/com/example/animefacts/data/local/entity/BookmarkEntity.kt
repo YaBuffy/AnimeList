@@ -11,5 +11,8 @@ data class BookmarkEntity(
     val imageUrl: String,
     val status: String = ViewingStatus.NOT_WATCHED.name,
     val isFavorite: Boolean = false,
+    val watchedEpisodes: Int = 0,
+    val totalEpisodes: Int = 0,
+    val durationPerEp: Int = 0,
     val addedTime: Long = System.currentTimeMillis()
 )

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -166,7 +167,24 @@ fun MainNavigation(
         ){
 
             composable(Screen.Stats.route){
-                StatsScreen()
+                StatsScreen(
+                    modifier = Modifier.padding(paddingValues),
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    },
+                    onBookmarkClick = {
+                        navController.navigate(Screen.Bookmark.route){
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+
+                        }
+
+
+                    }
+                )
             }
         }
 

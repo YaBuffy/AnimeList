@@ -23,6 +23,7 @@ import com.example.animefacts.domain.model.Studio
 import com.example.animefacts.domain.model.User
 import com.example.animefacts.domain.model.ViewingStatus
 import com.example.animefacts.util.formatDate
+import com.example.animefacts.util.parseDuration
 
 
 fun AnimeDto.toDomain(): Anime {
@@ -184,6 +185,9 @@ fun BookmarkEntity.toDomain(): Bookmark{
         title = title,
         imageUrl = imageUrl,
         status = status.let{ ViewingStatus.valueOf(it)},
+        watchedEpisodes = watchedEpisodes,
+        totalEpisodes = totalEpisodes,
+        durationPerEp = durationPerEp,
         isFavorite = isFavorite,
         addedTime = addedTime
     )
@@ -196,6 +200,9 @@ fun Bookmark.toEntity(): BookmarkEntity{
         imageUrl = imageUrl,
         status = status.name,
         isFavorite = isFavorite,
+        watchedEpisodes = watchedEpisodes,
+        totalEpisodes = totalEpisodes,
+        durationPerEp = durationPerEp,
         addedTime = addedTime
     )
 }
@@ -207,6 +214,9 @@ fun AnimeInfo.toBookmark(status: ViewingStatus, isFavorite: Boolean = false): Bo
         imageUrl = imageUrl,
         status = status,
         isFavorite = isFavorite,
+        watchedEpisodes = if(status == ViewingStatus.COMPLETED) episodes else 0,
+        totalEpisodes = episodes,
+        durationPerEp = parseDuration(duration),
         addedTime = System.currentTimeMillis()
     )
 }

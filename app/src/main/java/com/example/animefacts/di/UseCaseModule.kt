@@ -2,10 +2,13 @@ package com.example.animefacts.di
 
 import com.example.animefacts.domain.repository.AnimeRepository
 import com.example.animefacts.domain.repository.BookmarkRepository
+import com.example.animefacts.domain.usecase.bookmark.CalculateStatsUseCase
 import com.example.animefacts.domain.usecase.bookmark.DeleteBookmarkByIdUseCase
 import com.example.animefacts.domain.usecase.bookmark.GetBookmarkByIdUseCase
 import com.example.animefacts.domain.usecase.bookmark.GetBookmarksByStatusUseCase
 import com.example.animefacts.domain.usecase.bookmark.GetFavoritesUseCase
+import com.example.animefacts.domain.usecase.bookmark.GetRecentlyWatchedUseCase
+import com.example.animefacts.domain.usecase.bookmark.GetWeeklyActivityUseCase
 import com.example.animefacts.domain.usecase.bookmark.SaveBookmarkUseCase
 import com.example.animefacts.domain.usecase.home.GetAnimeByCategoryUseCase
 import com.example.animefacts.domain.usecase.detail.GetAnimeInfoUseCase
@@ -154,5 +157,29 @@ object UseCaseModule {
         repository: BookmarkRepository
     ): DeleteBookmarkByIdUseCase {
         return DeleteBookmarkByIdUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCalculateStatsUseCase(
+        repository: BookmarkRepository
+    ): CalculateStatsUseCase {
+        return CalculateStatsUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetWeeklyActivityUseCase(
+        repository: BookmarkRepository
+    ): GetWeeklyActivityUseCase {
+        return GetWeeklyActivityUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRecentlyWatchedUseCase(
+        repository: BookmarkRepository
+    ): GetRecentlyWatchedUseCase {
+        return GetRecentlyWatchedUseCase(repository)
     }
 }

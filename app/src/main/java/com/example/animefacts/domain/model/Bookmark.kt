@@ -6,5 +6,8 @@ data class Bookmark(
     val imageUrl: String,
     val status: ViewingStatus,
     val isFavorite: Boolean = false,
+    val watchedEpisodes: Int = 0,
+    val totalEpisodes: Int = 0,
+    val durationPerEp: Int = 0,
     val addedTime: Long
 )
