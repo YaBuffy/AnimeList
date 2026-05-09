@@ -159,6 +159,25 @@ fun MainNavigation(
                 )
             }
 
+            composable(
+                route = Screen.AnimeInfo.route,
+                arguments = listOf(
+                    navArgument("id"){
+                        type = NavType.IntType
+                    }
+                )
+            ){
+                AnimeInfoScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    paddingValues = paddingValues,
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
+                    }
+                )
+            }
+
         }
 
         navigation(
@@ -183,6 +202,25 @@ fun MainNavigation(
                         }
 
 
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.AnimeInfo.route,
+                arguments = listOf(
+                    navArgument("id"){
+                        type = NavType.IntType
+                    }
+                )
+            ){
+                AnimeInfoScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    paddingValues = paddingValues,
+                    onAnimeClick = {
+                        navController.navigate(Screen.AnimeInfo.createRoute(it))
                     }
                 )
             }
